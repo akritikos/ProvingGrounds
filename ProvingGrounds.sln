@@ -9,9 +9,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4D8DCCC9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{880B7FC7-CB67-4719-B45F-3DAE71F3C000}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvingGrounds.Runner", "..\..\..\..\..\..\..\Users\akritikos\source\repos\Personal\ProvingGrounds\src\ProvingGrounds.Runner\ProvingGrounds.Runner.csproj", "{6DAC88D5-DFB4-4E16-995A-093F9F3FAE14}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DAC88D5-DFB4-4E16-995A-093F9F3FAE14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DAC88D5-DFB4-4E16-995A-093F9F3FAE14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DAC88D5-DFB4-4E16-995A-093F9F3FAE14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DAC88D5-DFB4-4E16-995A-093F9F3FAE14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6DAC88D5-DFB4-4E16-995A-093F9F3FAE14} = {24544C65-E9A4-4450-A4F5-CF75C0F86C14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F59804B6-C739-4C7D-9E95-F45FB428FC72}
