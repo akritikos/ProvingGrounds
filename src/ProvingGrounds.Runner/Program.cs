@@ -1,19 +1,23 @@
 namespace Kritikos.ProvingGrounds.Runner
 {
 	using System;
+	using System.Collections.Generic;
 
 	public static class Program
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
-			Console.WriteLine($"Args used: {args}");
+			Console.WriteLine("Enter Password to hash:");
+			var password = Console.ReadLine();
 			var hasher = new PasswordHasher();
-			hasher.VerifyHashedPassword(
-				"AQAAAAEAACcQAAAAEJc77umxwOoUmdXwhe5sgCx0hoqxi50fZ/f+XclcqnhArSEUMMsNVpcYgHlWfvYYQQ==",
-				"123456");
-			var generator = new RandomPasswordGenerator();
-			var t = generator.GeneratePassword();
+			var hash = hasher.HashPassword(password);
+			Console.WriteLine($"Calculated hash:\n{hash}");
+			Console.WriteLine("Enter hash to verify");
+			var verify = Console.ReadLine();
+			Console.WriteLine("Enter password of that hash:");
+			var pass = Console.ReadLine();
+			Console.WriteLine(hasher.VerifyHashedPassword(verify, pass));
+			Console.ReadLine();
 		}
 	}
 }
