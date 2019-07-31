@@ -41,8 +41,8 @@ jobs:
 
   - powershell: |
       echo "Current version: $(versioning.gitVersion)"
-      name: versionDisplay
-      displayName: Shows currently compiling version
+    name: versionDisplay
+    displayName: Shows currently compiling version
 
 - job: Building
   pool:
