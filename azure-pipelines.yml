@@ -19,16 +19,17 @@ jobs:
     vmImage: ubuntu-latest
 
   steps:
-  - task: DotNetCoreCLI@2
-    name: dotnetRestore
-    displayName: Restoring nugets
-    inputs:
-      command: 'restore'
-      arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
-      verbosityRestore: Normal
+  # - task: DotNetCoreCLI@2
+  #   name: dotnetRestore
+  #   displayName: Restoring nugets
+  #   inputs:
+  #     command: 'restore'
+  #     arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
+  #     verbosityRestore: Normal
 
   - powershell: |
-      dotnet tool install gitversion.tool --tool-path "$Pipeline.Workspace/tools"
+      dotnet tool install gitversion.tool --tool-path $(ToolPath)/tools
+      ls $(ToolPath)/tools
     displayName: Installing Dotnet Tools
 
   - powershell: |
