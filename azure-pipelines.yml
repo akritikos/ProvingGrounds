@@ -8,7 +8,7 @@ jobs:
 - job: Windows
   pool: windows-latest
   steps:
-  - template: dotfiles/azure-pipelines/install-sdk.yml
+  - template: dotfiles/.azure-pipelines/02-install-sdk-preview.yml
 
   - powershell: dotnet tool install -g gitversion.tool
 
