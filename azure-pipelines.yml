@@ -79,10 +79,19 @@ jobs:
     displayName: Packing as Nugets
     inputs:
       command: pack
+      nobuild: true
+      noCache: true
+      packDirectory: $(Pipeline.Workspace)/nuget
       searchPatternPack: 'src/*/*.csproj'
       versioningScheme: byEnvVar
       versionEnvVar: Version
       verbosityPack: normal
+
+  - task: PublishBuildArtifacts@1
+    name: publish
+    displayName: Publish build artifacts
+    inputs:
+      ArtifactName: 'drop'
 
 - job: Testing
   pool:
@@ -117,9 +126,3 @@ jobs:
     Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
   steps:
   - checkout: none
-
-  - task: PublishBuildArtifacts@1
-    name: publish
-    displayName: Publish build artifacts
-    inputs:
-      ArtifactName: 'drop'
