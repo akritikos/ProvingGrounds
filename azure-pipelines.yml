@@ -11,6 +11,7 @@ variables:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   BuildPlatform: Any CPU
   BuildConfiguration: Release
+  ToolPath: $Pipeline.Workspace/tools
 
 jobs:
 - job: Setup
@@ -27,11 +28,11 @@ jobs:
       verbosityRestore: Normal
 
   - powershell: |
-      dotnet tool install -g gitversion.tool
+      dotnet tool install --global gitversion.tool --toolpath
     displayName: Installing Global Tools
 
   - powershell: |
-      $gitVersion = dotnet gitversion /output json /showvariable NugetVersion
+      $gitVersion = "$ToolPath/dotnet-gitversion" /output json /showvariable NugetVersion
       echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]$gitVersion"
       echo "Environment version is: $Version"
       echo "Git version is: $gitVersion"
