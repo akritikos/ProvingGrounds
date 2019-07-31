@@ -52,7 +52,7 @@ jobs:
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      arguments: -Project2ProjectTimeOut 20 --packages $(Build.BinariesDirectory)/.nuget
+      arguments: -Project2ProjectTimeOut 20
       verbosityRestore: Normal
 
   - task: DotNetCoreCLI@2
@@ -62,10 +62,16 @@ jobs:
       command: build
       projects: src/*/*.csproj
       configuration: $(BuildConfiguration)
-      arguments: -o $(Build.BinariesDirectory)/build
+      arguments: -o $(build.artifactStagingDirectory)/build
       versioningScheme: byEnvVar
       versionEnvVar: Version
 
+  - task: PublishBuildArtifacts@1
+    name: publishBin
+    displayName: Publish build artifacts
+    inputs:
+      PathtoPublish: $(build.artifactStagingDirectory)/build
+      ArtifactName: 'drop'
 
   - task: DotNetCoreCLI@2
     name: dotnetPack
@@ -78,8 +84,14 @@ jobs:
       versionEnvVar: Version
       verbosityPack: normal
       nobuild: true
-      restoreDirectory: $(Build.BinariesDirectory)/.nuget
-      packDirectory: $(Build.BinariesDirectory)/nuget
+      packDirectory: $(build.artifactStagingDirectory)/nuget
+
+  - task: PublishBuildArtifacts@1
+    name: publishBin
+    displayName: Publish build artifacts
+    inputs:
+      PathtoPublish: $(build.artifactStagingDirectory)/nuget
+      ArtifactName: 'nuget'
 
 - job: Testing
   pool:
@@ -114,10 +126,3 @@ jobs:
     Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
   steps:
   - checkout: none
-
-  - task: PublishBuildArtifacts@1
-    name: publish
-    displayName: Publish build artifacts
-    inputs:
-      PathtoPublish: $(Build.BinariesDirectory)/build
-      ArtifactName: 'drop'
