@@ -3,6 +3,8 @@ trigger:
     include:
       - master
       - develop
+      - feature/*
+      - bugfix/*
 
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -11,7 +13,7 @@ variables:
   BuildConfiguration: Release
 
 jobs:
-- job: Packing
+- job: Building
   pool:
     vmImage: ubuntu-latest
 
@@ -34,7 +36,7 @@ jobs:
 
   - powershell: |
       $gitVersion = dotnet gitversion /output json /showvariable NugetVersion
-      echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]$(gitVersion)"
+      echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]$gitVersion"
       echo "Environment version is: $env:Version"
       echo "Git version is: $gitVersion"
       cat Directory.Build.props
@@ -45,7 +47,7 @@ jobs:
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      arguments: -Project2ProjectTimeOut 20
+      arguments: -Project2ProjectTimeOut 20 --packages $Pipeline.Workspace/.nuget
       verbosityRestore: Normal
 
   - task: DotNetCoreCLI@2
@@ -58,5 +60,12 @@ jobs:
       projects: src/*/*.csproj
 
 - job: Testing
+  pool:
+    vmImage: ubuntu-latest
 
 - job: Publishing
+  pool:
+    vmImage: ubuntu-latest
+  dependsOn:
+    - Building
+    - Testing
