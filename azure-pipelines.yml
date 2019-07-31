@@ -5,10 +5,12 @@ trigger:
       - develop
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  BuildPlatform: Any CPU
+  BuildConfiguration: Release
 
 jobs:
-- job: Windows
+- job: Packing
   pool: Hosted Windows 2019 with VS2019
 
   steps:
@@ -42,3 +44,12 @@ jobs:
       command: 'restore'
       arguments: -Project2ProjectTimeOut 20
       verbosityRestore: Normal
+
+  - task: DotNetCoreCLI@2
+    name: dotnetBuild
+    displayName: Building Projects
+    inputs:
+      command: build
+      configuration: $(BuildConfiguration)
+      arguments: --no-restore
+      projects: src/*/*.csproj
