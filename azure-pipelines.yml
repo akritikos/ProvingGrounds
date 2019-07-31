@@ -28,7 +28,7 @@ jobs:
       verbosityRestore: Normal
 
   - powershell: |
-      dotnet tool install --global gitversion.tool --toolpath
+      dotnet tool install --global gitversion.tool --tool-path $ToolPath
     displayName: Installing Global Tools
 
   - powershell: |
