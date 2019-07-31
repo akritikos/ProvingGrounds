@@ -21,13 +21,13 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   steps:
-  # - task: DotNetCoreCLI@2
-  #   name: dotnetRestore
-  #   displayName: Restoring nugets
-  #   inputs:
-  #     command: 'restore'
-  #     arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
-  #     verbosityRestore: Normal
+  - task: DotNetCoreCLI@2
+    name: dotnetRestore
+    displayName: Restoring nugets
+    inputs:
+      command: 'restore'
+      arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
+      verbosityRestore: Normal
 
   - powershell: |
       dotnet tool install --tool-path .. gitversion.tool
@@ -55,24 +55,34 @@ jobs:
   - checkout: self
     fetchDepth: 1
 
-  # - task: DotNetCoreCLI@2
-  #   name: dotnetRestore
-  #   displayName: Restoring nugets
-  #   inputs:
-  #     command: 'restore'
-  #     arguments: -Project2ProjectTimeOut 20 --packages $Pipeline.Workspace/.nuget
-  #     verbosityRestore: Normal
+  - task: DotNetCoreCLI@2
+    name: dotnetRestore
+    displayName: Restoring nugets
+    inputs:
+      command: 'restore'
+      arguments: -Project2ProjectTimeOut 20 --packages $Pipeline.Workspace/.nuget
+      verbosityRestore: Normal
 
-  # - task: DotNetCoreCLI@2
-  #   name: dotnetBuild
-  #   displayName: Building Projects
-  #   inputs:
-  #     command: build
-  #     configuration: $(BuildConfiguration)
-  #     arguments: --no-restore
-  #     projects: src/*/*.csproj
-  - powershell: |
-      echo "Version is: $Version"
+  - task: DotNetCoreCLI@2
+    name: dotnetBuild
+    displayName: Building Projects
+    inputs:
+      command: build
+      configuration: $(BuildConfiguration)
+      arguments: --no-restore
+      projects: src/*/*.csproj
+      versioningScheme: byEnvVar
+      versionEnvVar: Version
+
+  - task: DotNetCoreCLI@2
+    name: dotnetPack
+    displayName: Packing as Nugets
+    inputs:
+      command: pack
+      searchPatternPack: 'src/*/*.csproj'
+      versioningScheme: byEnvVar
+      versionEnvVar: Version
+      verbosityPack: normal
 
 - job: Testing
   pool:
@@ -85,13 +95,14 @@ jobs:
   - checkout: self
     fetchDepth: 1
 
-  # - task: DotNetCoreCLI@2
-  #   name: dotnetRestore
-  #   displayName: Restoring nugets
-  #   inputs:
-  #     command: 'restore'
-  #     arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
-  #     verbosityRestore: Normal
+  - task: DotNetCoreCLI@2
+    name: dotnetRestore
+    displayName: Restoring nugets
+    inputs:
+      command: 'restore'
+      arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
+      verbosityRestore: Normal
+
   - powershell: |
       echo "Version is: $(Version)"
 
@@ -106,5 +117,9 @@ jobs:
     Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
   steps:
   - checkout: none
-  - powershell: |
-      echo "Version is: $Version"
+
+  - task: PublishBuildArtifacts@1
+    name: publish
+    displayName: Publish build artifacts
+    inputs:
+      ArtifactName: 'drop'
