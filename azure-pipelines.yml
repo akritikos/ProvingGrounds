@@ -32,10 +32,13 @@ jobs:
   - powershell: |
       $git = $(../dotnet-gitversion /output json /showvariable NugetVersion)
       echo "##vso[task.setvariable variable=gitVersion;isOutput=true]$(../dotnet-gitversion /output json /showvariable NugetVersion)"
-      echo "Environment version is: $(versioning.gitVersion)"
+      echo "Environment version is: $gitVersion"
       echo "Git version is: $git"
     name: versioning
     displayName: Setting version from git
+
+  - powershell: |
+      echo $(versioning.gitVersion)
 
 - job: Building
   pool:
