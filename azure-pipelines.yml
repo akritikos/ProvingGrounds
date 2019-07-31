@@ -28,6 +28,8 @@ jobs:
 
   - powershell: |
       dotnet tool install --global gitversion.tool
+      dotnet tool list --global
+      ls .. -a
     displayName: Installing Dotnet Tools
 
   - powershell: |
