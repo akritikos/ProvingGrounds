@@ -11,7 +11,7 @@ variables:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   BuildPlatform: Any CPU
   BuildConfiguration: Release
-  ToolPath: '$Pipeline.Workspace/tools'
+  ToolPath: $Pipeline.Workspace/tools
 
 jobs:
 - job: Setup
