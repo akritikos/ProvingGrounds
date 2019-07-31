@@ -11,7 +11,7 @@ variables:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   BuildPlatform: Any CPU
   BuildConfiguration: Release
-  ToolPath: $Pipeline.Workspace/tools
+  ToolPath: '$Pipeline.Workspace/tools'
 
 jobs:
 - job: Setup
@@ -24,11 +24,11 @@ jobs:
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      arguments: -Project2ProjectTimeOut 20 --packages $Pipeline.Workspace/.nuget
+      arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
       verbosityRestore: Normal
 
   - powershell: |
-      dotnet tool install gitversion.tool --tool-path $ToolPath
+      dotnet tool install gitversion.tool --tool-path "$Pipeline.Workspace/tools"
     displayName: Installing Dotnet Tools
 
   - powershell: |
