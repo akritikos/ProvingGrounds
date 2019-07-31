@@ -11,7 +11,7 @@ variables:
 
 jobs:
 - job: Packing
-  pool: Hosted Windows 2019 with VS2019
+  pool: ubuntu-latest
 
   steps:
   - task: UseDotNet@2
@@ -20,11 +20,11 @@ jobs:
       packageType: sdk
       version: 3.0.100-preview7-012821
 
-  - task: UseDotNet@2
-    displayName: Install .NET Core SDK 2
-    inputs:
-      packageType: sdk
-      version: 2.2.203
+  # - task: UseDotNet@2
+  #   displayName: Install .NET Core SDK 2
+  #   inputs:
+  #     packageType: sdk
+  #     version: 2.2.203
 
   - powershell: |
       dotnet tool install -g gitversion.tool
