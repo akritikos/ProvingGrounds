@@ -1,4 +1,4 @@
-namespace Kritikos.ProvingGrounds.Runner
+namespace Kritikos.ProvingGrounds.Hasher
 {
 	using System;
 	using System.Text;

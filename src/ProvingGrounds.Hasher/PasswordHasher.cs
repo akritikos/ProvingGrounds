@@ -1,4 +1,4 @@
-namespace Kritikos.ProvingGrounds.Runner
+namespace Kritikos.ProvingGrounds.Hasher
 {
 	using System;
 	using System.Collections.Generic;
@@ -126,6 +126,7 @@ namespace Kritikos.ProvingGrounds.Runner
 				// we might go off the end of the array. Regardless, a malformed payload
 				// implies verification failed.
 				return false;
+				throw;
 			}
 		}
 

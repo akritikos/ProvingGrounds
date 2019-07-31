@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvingGrounds.Runner", "src\ProvingGrounds.Runner\ProvingGrounds.Runner.csproj", "{A450EE10-FE32-4AFC-B695-A53DC107D4E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProvingGrounds.Hasher", "src\ProvingGrounds.Hasher\ProvingGrounds.Hasher.csproj", "{CD3BA708-6B22-4A2D-BDD1-406DF8AB4FAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,12 +23,17 @@ Global
 		{A450EE10-FE32-4AFC-B695-A53DC107D4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A450EE10-FE32-4AFC-B695-A53DC107D4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A450EE10-FE32-4AFC-B695-A53DC107D4E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD3BA708-6B22-4A2D-BDD1-406DF8AB4FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD3BA708-6B22-4A2D-BDD1-406DF8AB4FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD3BA708-6B22-4A2D-BDD1-406DF8AB4FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD3BA708-6B22-4A2D-BDD1-406DF8AB4FAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A450EE10-FE32-4AFC-B695-A53DC107D4E1} = {24544C65-E9A4-4450-A4F5-CF75C0F86C14}
+		{CD3BA708-6B22-4A2D-BDD1-406DF8AB4FAE} = {24544C65-E9A4-4450-A4F5-CF75C0F86C14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F59804B6-C739-4C7D-9E95-F45FB428FC72}
