@@ -18,6 +18,14 @@ jobs:
     vmImage: ubuntu-latest
 
   steps:
+  - task: DotNetCoreCLI@2
+    name: dotnetRestore
+    displayName: Restoring nugets
+    inputs:
+      command: 'restore'
+      arguments: -Project2ProjectTimeOut 20 --packages $Pipeline.Workspace/.nuget
+      verbosityRestore: Normal
+
   - task: UseDotNet@2
     displayName: Install .NET Core SDK 3
     inputs:
@@ -41,14 +49,6 @@ jobs:
       echo "Git version is: $gitVersion"
     name: versioning
     displayName: Setting version from git
-
-  - task: DotNetCoreCLI@2
-    name: dotnetRestore
-    displayName: Restoring nugets
-    inputs:
-      command: 'restore'
-      arguments: -Project2ProjectTimeOut 20 --packages $Pipeline.Workspace/.nuget
-      verbosityRestore: Normal
 
   - task: DotNetCoreCLI@2
     name: dotnetBuild
