@@ -87,8 +87,8 @@ jobs:
       packDirectory: $(build.artifactStagingDirectory)/nuget
 
   - task: PublishBuildArtifacts@1
-    name: publishBin
-    displayName: Publish build artifacts
+    name: publishNuget
+    displayName: Publish nugets
     inputs:
       PathtoPublish: $(build.artifactStagingDirectory)/nuget
       ArtifactName: 'nuget'
