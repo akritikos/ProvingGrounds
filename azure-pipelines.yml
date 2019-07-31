@@ -27,16 +27,16 @@ jobs:
       verbosityRestore: Normal
 
   - powershell: |
+      dotnet tool install -g gitversion.tool
+    displayName: Installing Global Tools
+
+  - powershell: |
       $gitVersion = dotnet gitversion /output json /showvariable NugetVersion
       echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]$gitVersion"
       echo "Environment version is: $Version"
       echo "Git version is: $gitVersion"
     name: versioning
     displayName: Setting version from git
-
-  - powershell: |
-      dotnet tool install -g gitversion.tool
-    displayName: Installing Global Tools
 
 - job: Building
   pool:
