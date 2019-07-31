@@ -41,6 +41,9 @@ jobs:
     - Dependencies
 
   steps:
+
+  - template: dotfiles/.azure-pipelines/02-install-sdk-preview.yml
+
   - task: DotNetCoreCLI@2
     name: dotnetRestore
     displayName: Restoring nugets
