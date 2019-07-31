@@ -93,7 +93,7 @@ jobs:
   #     arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
   #     verbosityRestore: Normal
   - powershell: |
-      echo Version is: $Version
+      echo "Version is: $(Version)"
 
 - job: Publishing
   pool:
