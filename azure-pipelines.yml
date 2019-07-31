@@ -68,30 +68,25 @@ jobs:
     displayName: Building Projects
     inputs:
       command: build
-      configuration: $(BuildConfiguration)
-      arguments: --no-restore
       projects: src/*/*.csproj
+      configuration: $(BuildConfiguration)
+      arguments: -o $(Build.StagingDirectory)/build
       versioningScheme: byEnvVar
       versionEnvVar: Version
+
 
   - task: DotNetCoreCLI@2
     name: dotnetPack
     displayName: Packing as Nugets
     inputs:
       command: pack
-      nobuild: true
-      noCache: true
-      packDirectory: $(Pipeline.Workspace)/nuget
       searchPatternPack: 'src/*/*.csproj'
+      configuration: $(BuildConfiguration)
       versioningScheme: byEnvVar
       versionEnvVar: Version
       verbosityPack: normal
-
-  - task: PublishBuildArtifacts@1
-    name: publish
-    displayName: Publish build artifacts
-    inputs:
-      ArtifactName: 'drop'
+      restoreDirectory: $(Build.StagingDirectory)/build
+      packDirectory: $(Build.StagingDirectory)/nuget
 
 - job: Testing
   pool:
@@ -126,3 +121,9 @@ jobs:
     Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
   steps:
   - checkout: none
+
+  - task: PublishBuildArtifacts@1
+    name: publish
+    displayName: Publish build artifacts
+    inputs:
+      ArtifactName: 'drop'
