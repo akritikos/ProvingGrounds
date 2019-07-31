@@ -21,14 +21,6 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   steps:
-  - task: DotNetCoreCLI@2
-    name: dotnetRestore
-    displayName: Restoring nugets
-    inputs:
-      command: 'restore'
-      arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
-      verbosityRestore: Normal
-
   - powershell: |
       dotnet tool install --tool-path .. gitversion.tool
     displayName: Installing Dotnet Tools
@@ -43,6 +35,14 @@ jobs:
       echo "Current version: $(versioning.gitVersion)"
     name: versionDisplay
     displayName: Shows currently compiling version
+
+  - task: DotNetCoreCLI@2
+    name: dotnetRestore
+    displayName: Restoring nugets
+    inputs:
+      command: 'restore'
+      arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
+      verbosityRestore: Normal
 
 - job: Building
   pool:
