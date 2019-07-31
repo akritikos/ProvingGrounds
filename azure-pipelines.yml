@@ -41,7 +41,7 @@ jobs:
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      arguments: -Project2ProjectTimeOut 20 --packages $(Pipeline.Workspace)/.nuget
+      arguments: -Project2ProjectTimeOut 20 --packages $(Build.BinariesDirectory)/.nuget
       verbosityRestore: Normal
 
 - job: Building
@@ -60,7 +60,7 @@ jobs:
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      arguments: -Project2ProjectTimeOut 20 --packages $(Pipeline.Workspace)/.nuget
+      arguments: -Project2ProjectTimeOut 20 --packages $(Build.BinariesDirectory)/.nuget
       verbosityRestore: Normal
 
   - task: DotNetCoreCLI@2
@@ -70,7 +70,7 @@ jobs:
       command: build
       projects: src/*/*.csproj
       configuration: $(BuildConfiguration)
-      arguments: -o $(Pipeline.Workspace)/build
+      arguments: -o $(Build.BinariesDirectory)/build
       versioningScheme: byEnvVar
       versionEnvVar: Version
 
@@ -80,14 +80,14 @@ jobs:
     displayName: Packing as Nugets
     inputs:
       command: pack
-      arguments: --no-build
       searchPatternPack: 'src/*/*.csproj'
       configuration: $(BuildConfiguration)
       versioningScheme: byEnvVar
       versionEnvVar: Version
       verbosityPack: normal
-      restoreDirectory: $(Pipeline.Workspace)/.nuget
-      packDirectory: $(Pipeline.Workspace)/nuget
+      nobuild: true
+      restoreDirectory: $(Build.BinariesDirectory)/.nuget
+      packDirectory: $(Build.BinariesDirectory)/nuget
 
 - job: Testing
   pool:
@@ -105,7 +105,7 @@ jobs:
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      arguments: -Project2ProjectTimeOut 20 --packages "$(Pipeline.Workspace)/.nuget)
+      arguments: -Project2ProjectTimeOut 20 --packages "$(Build.BinariesDirectory)/.nuget)
       verbosityRestore: Normal
 
   - powershell: |
@@ -127,5 +127,5 @@ jobs:
     name: publish
     displayName: Publish build artifacts
     inputs:
-      PathtoPublish: $(Pipeline.Workspace)/build
+      PathtoPublish: $(Build.BinariesDirectory)/build
       ArtifactName: 'drop'
