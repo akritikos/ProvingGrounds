@@ -70,7 +70,7 @@ jobs:
       command: build
       projects: src/*/*.csproj
       configuration: $(BuildConfiguration)
-      arguments: -o $(Build.StagingDirectory)/build
+      arguments: -o $(Pipeline.Workspace)/build
       versioningScheme: byEnvVar
       versionEnvVar: Version
 
@@ -85,8 +85,8 @@ jobs:
       versioningScheme: byEnvVar
       versionEnvVar: Version
       verbosityPack: normal
-      restoreDirectory: $(Build.StagingDirectory)/build
-      packDirectory: $(Build.StagingDirectory)/nuget
+      restoreDirectory: $(Pipeline.Workspace)/build
+      packDirectory: $(Pipeline.Workspace)/nuget
 
 - job: Testing
   pool:
@@ -126,4 +126,5 @@ jobs:
     name: publish
     displayName: Publish build artifacts
     inputs:
+      PathtoPublish: $(Pipeline.Workspace)/build
       ArtifactName: 'drop'
