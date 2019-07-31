@@ -83,7 +83,6 @@ jobs:
       versioningScheme: byEnvVar
       versionEnvVar: Version
       verbosityPack: normal
-      nobuild: true
       packDirectory: $(build.artifactStagingDirectory)/nuget
 
   - task: PublishBuildArtifacts@1
