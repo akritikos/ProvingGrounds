@@ -11,7 +11,7 @@ variables:
 
 jobs:
 - job: Packing
-  pool: ubuntu-latest
+  pool: ubuntu-16.04
 
   steps:
   - task: UseDotNet@2
