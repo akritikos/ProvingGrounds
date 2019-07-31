@@ -8,7 +8,11 @@ jobs:
 - job: Windows
   pool: windows-latest
   steps:
-  - template: dotfiles/.azure-pipelines/02-install-sdk-preview.yml
+  - task: UseDotNet@2
+    displayName: Install .NET Core SDK 3
+    inputs:
+      packageType: sdk
+      version: 3.0.100-preview7-012821
 
   - powershell: dotnet tool install -g gitversion.tool
 
