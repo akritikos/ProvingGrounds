@@ -13,19 +13,8 @@ variables:
   BuildConfiguration: Release
 
 jobs:
-- job: Building
-  pool:
-    vmImage: ubuntu-latest
-
+- job: Dependencies
   steps:
-  - task: DotNetCoreCLI@2
-    name: dotnetRestore
-    displayName: Restoring nugets
-    inputs:
-      command: 'restore'
-      arguments: -Project2ProjectTimeOut 20 --packages $Pipeline.Workspace/.nuget
-      verbosityRestore: Normal
-
   - task: UseDotNet@2
     displayName: Install .NET Core SDK 3
     inputs:
@@ -41,6 +30,21 @@ jobs:
   - powershell: |
       dotnet tool install -g gitversion.tool
     displayName: Installing Global Tools
+
+- job: Building
+  pool:
+    vmImage: ubuntu-latest
+  dependsOn:
+    - Dependencies
+
+  steps:
+  - task: DotNetCoreCLI@2
+    name: dotnetRestore
+    displayName: Restoring nugets
+    inputs:
+      command: 'restore'
+      arguments: -Project2ProjectTimeOut 20 --packages $Pipeline.Workspace/.nuget
+      verbosityRestore: Normal
 
   - powershell: |
       $gitVersion = dotnet gitversion /output json /showvariable NugetVersion
@@ -62,6 +66,8 @@ jobs:
 - job: Testing
   pool:
     vmImage: ubuntu-latest
+  dependsOn:
+    - Dependencies
 
 - job: Publishing
   pool:
