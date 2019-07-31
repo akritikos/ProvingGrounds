@@ -50,7 +50,7 @@ jobs:
   dependsOn:
     - Setup
   variables:
-    gitVersion: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
+    Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
   steps:
   - checkout: self
     fetchDepth: 1
@@ -72,7 +72,7 @@ jobs:
   #     arguments: --no-restore
   #     projects: src/*/*.csproj
   - powershell: |
-      echo "Version is: $gitVersion"
+      echo "Version is: $Version"
 
 - job: Testing
   pool:
@@ -80,7 +80,7 @@ jobs:
   dependsOn:
     - Setup
   variables:
-    gitVersion: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
+    Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
   steps:
   - checkout: self
     fetchDepth: 1
@@ -93,7 +93,7 @@ jobs:
   #     arguments: -Project2ProjectTimeOut 20 --packages "$Pipeline.Workspace/.nuget"
   #     verbosityRestore: Normal
   - powershell: |
-      echo "Version is: $gitVersion"
+      echo "Version is: $Version"
 
 - job: Publishing
   pool:
@@ -103,8 +103,8 @@ jobs:
     - Building
     - Testing
   variables:
-    gitVersion: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
+    Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
   steps:
   - checkout: none
   - powershell: |
-      echo "Version is: $gitVersion"
+      echo "Version is: $Version"
