@@ -28,8 +28,8 @@ jobs:
       verbosityRestore: Normal
 
   - powershell: |
-      dotnet tool install --global gitversion.tool --tool-path $ToolPath
-    displayName: Installing Global Tools
+      dotnet tool install gitversion.tool --tool-path $ToolPath
+    displayName: Installing Dotnet Tools
 
   - powershell: |
       $gitVersion = "$ToolPath/dotnet-gitversion" /output json /showvariable NugetVersion
