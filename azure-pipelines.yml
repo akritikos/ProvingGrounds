@@ -6,7 +6,8 @@ trigger:
 
 jobs:
 - job: Windows
-  pool: windows-latest
+  pool: Hosted Windows 2019 with VS2019
+
   steps:
   - task: UseDotNet@2
     displayName: Install .NET Core SDK 3
