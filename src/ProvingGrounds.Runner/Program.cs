@@ -1,7 +1,7 @@
 namespace Kritikos.ProvingGrounds.Runner
 {
 	using System;
-	using System.Collections.Generic;
+	using Kritikos.ProvingGrounds.Hasher;
 
 	public static class Program
 	{

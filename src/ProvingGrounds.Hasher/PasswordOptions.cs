@@ -1,4 +1,4 @@
-namespace Kritikos.ProvingGrounds.Runner
+namespace Kritikos.ProvingGrounds.Hasher
 {
 	public class PasswordOptions
 	{
