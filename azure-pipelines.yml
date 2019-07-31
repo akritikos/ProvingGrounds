@@ -29,7 +29,8 @@ jobs:
     displayName: Installing Global Tools
 
   - powershell: |
-      echo "##vso[task.setvariable variable=Version;isOutput=true]$(dotnet gitversion /output json /showvariable NugetVersion)"
+      $gitVersion = dotnet gitversion /output json /showvariable NugetVersion
+      echo "##vso[task.setvariable variable=Version;isOutput=true]$gitVersion"
       echo $env:Version
     displayName: Setting version from git
 
