@@ -20,7 +20,7 @@ variables:
 jobs:
 - job: Setup
   pool:
-    vmImage: ubuntu-latest
+    vmImage: windows-latest
   steps:
   - powershell: |
       dotnet tool install --tool-path .. gitversion.tool

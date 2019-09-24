@@ -1,6 +1,8 @@
 namespace Kritikos.ProvingGrounds.Runner
 {
 	using System;
+	using System.IO;
+
 	using Kritikos.ProvingGrounds.Hasher;
 
 	public static class Program
@@ -16,6 +18,7 @@ namespace Kritikos.ProvingGrounds.Runner
 			var verify = Console.ReadLine();
 			Console.WriteLine("Enter password of that hash:");
 			var pass = Console.ReadLine();
+			using var sw = new MemoryStream();
 			Console.WriteLine(hasher.VerifyHashedPassword(verify, pass));
 			Console.ReadLine();
 		}
