@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvingGrounds.Runner", "src\ProvingGrounds.Runner\ProvingGrounds.Runner.csproj", "{A450EE10-FE32-4AFC-B695-A53DC107D4E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProvingGrounds.Hasher", "src\ProvingGrounds.Hasher\ProvingGrounds.Hasher.csproj", "{CD3BA708-6B22-4A2D-BDD1-406DF8AB4FAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvingGrounds.Hasher", "src\ProvingGrounds.Hasher\ProvingGrounds.Hasher.csproj", "{CD3BA708-6B22-4A2D-BDD1-406DF8AB4FAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProvingGrounds.Hasher.Tests", "tests\ProvingGrounds.Hasher.Tests\ProvingGrounds.Hasher.Tests.csproj", "{3D9E320B-170E-4330-84D7-AAAB3D473A6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvingGrounds.Hasher.Tests", "tests\ProvingGrounds.Hasher.Tests\ProvingGrounds.Hasher.Tests.csproj", "{3D9E320B-170E-4330-84D7-AAAB3D473A6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtConfig", "src\JwtConfig\JwtConfig.csproj", "{BF96BEC7-F742-46EA-A85D-2C3243DBF1E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3D9E320B-170E-4330-84D7-AAAB3D473A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D9E320B-170E-4330-84D7-AAAB3D473A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D9E320B-170E-4330-84D7-AAAB3D473A6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF96BEC7-F742-46EA-A85D-2C3243DBF1E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF96BEC7-F742-46EA-A85D-2C3243DBF1E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF96BEC7-F742-46EA-A85D-2C3243DBF1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF96BEC7-F742-46EA-A85D-2C3243DBF1E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +47,7 @@ Global
 		{A450EE10-FE32-4AFC-B695-A53DC107D4E1} = {24544C65-E9A4-4450-A4F5-CF75C0F86C14}
 		{CD3BA708-6B22-4A2D-BDD1-406DF8AB4FAE} = {24544C65-E9A4-4450-A4F5-CF75C0F86C14}
 		{3D9E320B-170E-4330-84D7-AAAB3D473A6C} = {4D8DCCC9-445C-4700-A53A-BA1470AEEC97}
+		{BF96BEC7-F742-46EA-A85D-2C3243DBF1E8} = {24544C65-E9A4-4450-A4F5-CF75C0F86C14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F59804B6-C739-4C7D-9E95-F45FB428FC72}
