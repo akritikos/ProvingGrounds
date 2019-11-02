@@ -4,7 +4,6 @@ resources:
       checkoutOptions:
         submodules: true
         lfs: true
-
 trigger:
   branches:
     include:
@@ -16,7 +15,6 @@ variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   BuildPlatform: Any CPU
   BuildConfiguration: Release
-  VmImage: ubuntu-latest
 
 jobs:
 - job: Setup
@@ -40,7 +38,7 @@ jobs:
 
 - job: Building
   pool:
-    vmImage: $VmImage
+    vmImage: ubuntu-latest
   dependsOn:
     - Setup
   variables:
@@ -50,7 +48,6 @@ jobs:
     fetchDepth: 1
 
   - task: DotNetCoreCLI@2
-    name: dotnetRestore
     displayName: Restoring nugets
     inputs:
       command: 'restore'
@@ -58,7 +55,6 @@ jobs:
       verbosityRestore: Normal
 
   - task: DotNetCoreCLI@2
-    name: dotnetBuild
     displayName: Building Projects
     inputs:
       command: build
@@ -69,14 +65,12 @@ jobs:
       versionEnvVar: Version
 
   - task: PublishBuildArtifacts@1
-    name: publishBin
     displayName: Publish build artifacts
     inputs:
       PathtoPublish: $(build.artifactStagingDirectory)/build
       ArtifactName: 'drop'
 
   - task: DotNetCoreCLI@2
-    name: dotnetPack
     displayName: Packing as Nugets
     inputs:
       command: pack
@@ -96,7 +90,7 @@ jobs:
 
 - job: Testing
   pool:
-    vmImage: $VmImage
+    vmImage: ubuntu-latest
   dependsOn:
     - Setup
   variables:
@@ -118,7 +112,7 @@ jobs:
     displayName: Building Projects
     inputs:
       command: build
-      projects: src/*/*.csproj
+      projects: src/*/*.*proj
       configuration: $(BuildConfiguration)
       versioningScheme: byEnvVar
       versionEnvVar: Version
@@ -128,13 +122,13 @@ jobs:
     displayName: Testing implementations
     inputs:
       command: test
-      projects: 'tests/*/*.csproj'
+      projects: 'tests/*/*.*proj'
       configuration: 'Debug'
       testRunTitle: 'Running tests'
 
 - job: Publishing
   pool:
-    vmImage: $VmImage
+    vmImage: ubuntu-latest
   dependsOn:
     - Setup
     - Building
