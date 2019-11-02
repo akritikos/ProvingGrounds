@@ -138,6 +138,17 @@ jobs:
   steps:
   - checkout: none
 
+  - task: DownloadPipelineArtifact@2
+    displayName: Downloading artifact
+    inputs:
+      artifactName: 'nuget'
+      targetPath: $(build.artifactStagingDirectory)
+
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'ls $(build.artifactStagingDirectory)'
+
   - task: DotNetCoreCLI@2
     displayName: Pushing to nuget server
     inputs:
