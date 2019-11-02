@@ -142,6 +142,6 @@ jobs:
     displayName: Pushing to nuget server
     inputs:
       command: 'push'
-      packagesToPush: '$(Build.BinariesDirectory)/.nuget/*.nupkg'
+      packagesToPush: '$(build.artifactStagingDirectory)/nuget/*.nupkg'
       nuGetFeedType: 'external'
       publishFeedCredentials: 'Kritikos'
