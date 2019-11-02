@@ -158,6 +158,6 @@ jobs:
       command: 'custom'
       custom: nuget
       arguments: >
-        push '$(build.artifactStagingDirectory)/nuget/*.nupkg'
+        push '$(build.artifactStagingDirectory)/**.nupkg'
         -s $(KritikosNuget)
         -k $(KritikosApiKey)
