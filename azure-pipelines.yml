@@ -137,3 +137,11 @@ jobs:
     Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
   steps:
   - checkout: none
+
+  - task: DotNetCoreCLI@2
+    displayName: Pushing to nuget server
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.BinariesDirectory)/.nuget/*.nupkg'
+      nuGetFeedType: 'external'
+      publishFeedCredentials: 'Kritikos'
