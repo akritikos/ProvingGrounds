@@ -155,9 +155,10 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: Pushing to nuget server
     inputs:
+      workingDirectory: $(build.artifactStagingDirectory)/nuget
       command: 'custom'
       custom: nuget
       arguments: >
-        push '$(build.artifactStagingDirectory)/**.nupkg'
+        push *.nupkg
         -s $(KritikosNuget)
         -k $(KritikosApiKey)
