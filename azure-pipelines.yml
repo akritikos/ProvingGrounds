@@ -142,12 +142,12 @@ jobs:
     displayName: Downloading artifact
     inputs:
       artifactName: 'nuget'
-      targetPath: $(build.artifactStagingDirectory)
+      targetPath: $(build.artifactStagingDirectory)/nuget
 
   - task: Bash@3
     inputs:
       targetType: 'inline'
-      script: 'ls $(build.artifactStagingDirectory)'
+      script: 'ls $(build.artifactStagingDirectory) && ls $(build.artifactStagingDirectory)/nuget'
 
   - task: DotNetCoreCLI@2
     displayName: Pushing to nuget server
