@@ -16,6 +16,7 @@ variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   BuildPlatform: Any CPU
   BuildConfiguration: Release
+  VmImage: ubuntu-latest
 
 jobs:
 - job: Setup
@@ -39,7 +40,7 @@ jobs:
 
 - job: Building
   pool:
-    vmImage: ubuntu-latest
+    vmImage: $VmImage
   dependsOn:
     - Setup
   variables:
@@ -95,7 +96,7 @@ jobs:
 
 - job: Testing
   pool:
-    vmImage: ubuntu-latest
+    vmImage: $VmImage
   dependsOn:
     - Setup
   variables:
@@ -133,7 +134,7 @@ jobs:
 
 - job: Publishing
   pool:
-    vmImage: ubuntu-latest
+    vmImage: $VmImage
   dependsOn:
     - Setup
     - Building
