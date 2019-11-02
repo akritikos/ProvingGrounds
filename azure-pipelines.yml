@@ -12,9 +12,7 @@ trigger:
       - feature/*
       - bugfix/*
 variables:
-  DOTNET_CLI_TELEMETRY_OPTOUT: true
-  BuildPlatform: Any CPU
-  BuildConfiguration: Release
+  - group: Environment
 
 jobs:
 - job: Setup
@@ -152,7 +150,9 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: Pushing to nuget server
     inputs:
-      command: 'push'
-      packagesToPush: '$(build.artifactStagingDirectory)/nuget/*.nupkg'
-      nuGetFeedType: 'external'
-      publishFeedCredentials: 'Kritikos'
+      command: 'custom'
+      custom: nuget
+      arguments: >
+        push '$(build.artifactStagingDirectory)/nuget/*.nupkg'
+        -s 'https://nuget.kritikos.io'
+        -k $KritikosApiKey
