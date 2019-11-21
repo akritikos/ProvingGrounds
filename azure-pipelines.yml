@@ -21,7 +21,7 @@ trigger:
 variables:
   - group: Environment
   - name: SonarCloudProject
-    value: kritikos-io_Extensions
+    value: akritikos_ProvingGrounds
 
 jobs:
 - job: Setup
