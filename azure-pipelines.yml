@@ -69,8 +69,8 @@ jobs:
       configuration: $(BuildConfiguration)
       versioningScheme: byEnvVar
       versionEnvVar: Version
-      verbosityRestore: Normal
-      verbosityPack: normal
+      verbosityRestore: Minimal
+      verbosityPack: Minimal
   - task: PublishBuildArtifacts@1
     displayName: Publish Nugets
     inputs:
