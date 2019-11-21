@@ -140,6 +140,7 @@ jobs:
       targetType: inline
       script: |
         dotnet tool install --tool-path .. dotnet-sonarscanner
+        dotnet tool install --tool-path .. altcover
       pwsh: true
     displayName: Installing SonarCloud scanner
 
@@ -148,7 +149,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        ../dotnet-sonarscanner begin /k:"$(SonarCloudProject)" /v:"$(Version)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_APIKEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY)
+        ../dotnet-sonarscanner begin /k:"$(SonarCloudProject)" /v:"$(Version)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_APIKEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage/coverage.xml" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY)
       pwsh: true
     displayName: Scans project using SonarCloud on normal commits
 
@@ -157,7 +158,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        ../dotnet-sonarscanner begin /k:"$(SonarCloudProject)" /v:"$(Version)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_APIKEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY) /d:sonar.pullrequest.key="$(System.PullRequest.PullRequestId)" /d:sonar.pullrequest.provider="github"
+        ../dotnet-sonarscanner begin /k:"$(SonarCloudProject)" /v:"$(Version)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_APIKEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage/coverage.xml" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY) /d:sonar.pullrequest.key="$(System.PullRequest.PullRequestId)" /d:sonar.pullrequest.provider="github"
       pwsh: true
     displayName: Scans project using SonarCloud on pull requests
 
@@ -166,18 +167,41 @@ jobs:
     displayName: Building Projects
     inputs:
       command: build
-      configuration: $(BuildConfiguration)
+      arguments: -o $(build.artifactStagingDirectory)/build
+      configuration: 'Debug'
       versioningScheme: byEnvVar
       versionEnvVar: Version
+
+  - task: PowerShell@2
+    inputs:
+      targetType: inline
+      script: |
+        ../altcover --opencover --sourcelink --inplace -i $(build.artifactStagingDirectory)/build -o $(build.artifactStagingDirectory)/coverage
+      pwsh: true
+    displayName: Instruments code for coverage
 
   - task: DotNetCoreCLI@2
     name: dotnetTest
     displayName: Testing implementations
     inputs:
       command: test
-      projects: 'tests/*/*.*proj'
+      arguments: '--no-build'
       configuration: 'Debug'
       testRunTitle: 'Running tests'
+
+  - task: PowerShell@2
+    inputs:
+      targetType: inline
+      script: |
+        ../altcover Runner --collect -r $(build.artifactStagingDirectory)/build
+      pwsh: true
+    displayName: Instruments code for coverage
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish build artifacts
+    inputs:
+      PathtoPublish: $(build.artifactStagingDirectory)/coverage
+      ArtifactName: 'coverage'
 
   - task: PowerShell@2
     inputs:
