@@ -116,7 +116,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        ../dotnet sonarscanner end /d:sonar.login="$(SONAR_APIKEY)"
+        ../dotnet-sonarscanner end /d:sonar.login="$(SONAR_APIKEY)"
       pwsh: true
     displayName: Uploads SonarCloud results
 
