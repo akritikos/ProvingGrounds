@@ -106,16 +106,6 @@ jobs:
     condition: eq(variables['Build.Reason'], 'PullRequest')
     displayName: SonarCloud (PR)
   - task: DotNetCoreCLI@2
-    condition: false
-    displayName: Build Solution
-    inputs:
-      command: 'build'
-      configuration: 'Debug'
-      arguments: '-o $(build.artifactStagingDirectory)/build'
-      versioningScheme: byEnvVar
-      versionEnvVar: Version
-      verbosityRestore: Minimal
-  - task: DotNetCoreCLI@2
     displayName: Test Solution
     inputs:
       command: 'test'
