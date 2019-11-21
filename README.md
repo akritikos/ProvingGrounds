@@ -6,6 +6,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=akritikos_ProvingGrounds&metric=alert_status)](https://sonarcloud.io/dashboard?id=akritikos_ProvingGrounds)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![GitHub](https://img.shields.io/github/license/akritikos/ProvingGrounds)
+![GitHub language count](https://img.shields.io/github/languages/count/akritikos/ProvingGrounds)
+![GitHub top language](https://img.shields.io/github/languages/top/akritikos/ProvingGrounds)
 
 Mayhem and tests for personal projects.
