@@ -29,14 +29,6 @@ jobs:
   pool:
     vmImage: windows-latest
   steps:
-  - task: UseDotNet@2
-    displayName: 'Use explicit SDK version'
-    inputs:
-      packageType: 'sdk'
-      version: '3.x'
-      includePreviewVersions: true
-      performMultiLevelLookup: true
-
   - task: Cache@2
     inputs:
       key: '**/packages.lock.json'
