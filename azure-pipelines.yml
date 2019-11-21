@@ -164,7 +164,6 @@ jobs:
     displayName: Building Projects
     inputs:
       command: build
-      projects: src/*/*.*proj
       configuration: $(BuildConfiguration)
       versioningScheme: byEnvVar
       versionEnvVar: Version
