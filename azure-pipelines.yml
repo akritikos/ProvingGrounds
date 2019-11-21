@@ -39,7 +39,7 @@ jobs:
 
   - task: Cache@2
     inputs:
-      key: '**/packages.lock.json | .config/dotnet-tools.json'
+      key: '**/packages.lock.json'
       path: '$(Pipeline.Workspace)/.nuget/packages'
 
   - task: DotNetCoreCLI@2
@@ -55,16 +55,15 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        dotnet tool restore
+        dotnet tool install --tool-path .. gitversion.tool
       pwsh: true
-    displayName: Restoring Dotnet Tools
+    displayName: Installing Dotnet Tools
 
   - task: PowerShell@2
     inputs:
       targetType: inline
       script: |
-        echo '##vso[task.prependpath]%USERPROFILE%\.dotnet\tools'
-        $git = $(dotnet gitversion /output json /showvariable NugetVersion)
+        $git = $(../dotnet-gitversion /output json /showvariable NugetVersion)
         echo "##vso[task.setvariable variable=gitVersion;isOutput=true]$(../dotnet-gitversion /output json /showvariable SemVer)"
       pwsh: true
     displayName: Setting version from git
