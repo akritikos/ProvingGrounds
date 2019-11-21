@@ -132,7 +132,7 @@ jobs:
   - pwsh: |
       ../csmacnz.Coveralls --repoToken "$(COVERALLS_KEY)" --opencover -i $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --useRelativePaths --commitId "$(Build.SourceVersion)" --commitBranch "$(Build.SourceBranchName)" --commitAuthor "$(Build.RequestedFor)" --commitEmail "$(Build.RequestedForEmail)" --commitMessage "$(Build.SourceVersionMessage)" --jobId "$(Build.BuildId)" --pullRequest "$(System.PullRequest.PullRequestId)"
       ../codecov --token "$(CodeCovApiKey)" --file $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --branch "$(Build.SourceBranchName)" --sha "$(Build.SourceVersion)" --pr "$(System.PullRequest.PullRequestId)"
-    condition: ne(variables['Build.Reason'], 'PullRequest')
+    condition: eq(variables['Build.Reason'], 'PullRequest')
     displayName: Push Coverage (PR)
 - job: Publish
   pool:
