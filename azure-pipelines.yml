@@ -41,7 +41,7 @@ jobs:
   dependsOn:
     - Version
   variables:
-    Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
+    Version: $[ dependencies.Version.outputs['versioning.gitVersion'] ]
   steps:
   - checkout: self
     fetchDepth: 1
@@ -83,7 +83,7 @@ jobs:
   dependsOn:
     - Version
   variables:
-    Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
+    Version: $[ dependencies.Version.outputs['versioning.gitVersion'] ]
     GITHUB_KEY: $(GitHubApiKey)
     SONAR_ORG: $(SonarCloudOrganization)
     SONAR_KEY: $(SonarCloudApiKey)
