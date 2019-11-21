@@ -5,7 +5,7 @@ namespace Kritikos.ProvingGrounds.Hasher
 
 	public class RandomPasswordGenerator
 	{
-		public RandomPasswordGenerator(PasswordOptions options = null, Random rnd = null)
+		public RandomPasswordGenerator(PasswordOptions? options = null, Random? rnd = null)
 		{
 			Options = options ?? new PasswordOptions();
 			Random = rnd ?? new Random();

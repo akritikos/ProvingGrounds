@@ -7,7 +7,7 @@ namespace Kritikos.ProvingGrounds.Runner
 
 	public static class Program
 	{
-		public static void Main(string[] args)
+		public static void Main()
 		{
 			Console.WriteLine("Enter Password to hash:");
 			var password = Console.ReadLine();

@@ -9,13 +9,13 @@ namespace Kritikos.ProvingGrounds.Hasher
 
 	public class PasswordHasher
 	{
-		private readonly int _iterCount;
-		private readonly RandomNumberGenerator _rng;
+		private readonly int iterCount;
+		private readonly RandomNumberGenerator rng;
 
-		public PasswordHasher(RandomNumberGenerator rng = null, int iterCount = 10000)
+		public PasswordHasher(RandomNumberGenerator? rng = null, int iterCount = 10000)
 		{
-			_rng = rng ?? RandomNumberGenerator.Create();
-			_iterCount = iterCount;
+			this.rng = rng ?? RandomNumberGenerator.Create();
+			this.iterCount = iterCount;
 		}
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace Kritikos.ProvingGrounds.Hasher
 				throw new ArgumentNullException(nameof(password));
 			}
 
-			return Convert.ToBase64String(HashPasswordV3(password, _rng));
+			return Convert.ToBase64String(HashPasswordV3(password, rng));
 		}
 
 		/// <summary>
@@ -55,12 +55,7 @@ namespace Kritikos.ProvingGrounds.Hasher
 			var decodedHashedPassword = Convert.FromBase64String(hashedPassword);
 
 			// read the format marker from the hashed password
-			if (decodedHashedPassword.Length == 0)
-			{
-				return false;
-			}
-
-			return VerifyHashedPasswordV3(decodedHashedPassword, providedPassword, out _);
+			return decodedHashedPassword.Length != 0 && VerifyHashedPasswordV3(decodedHashedPassword, providedPassword, out _);
 		}
 
 		private static byte[] HashPasswordV3(
@@ -172,7 +167,7 @@ namespace Kritikos.ProvingGrounds.Hasher
 				password,
 				rng,
 				prf: KeyDerivationPrf.HMACSHA256,
-				iterCount: _iterCount,
+				iterCount: iterCount,
 				saltSize: 128 / 8,
 				numBytesRequested: 256 / 8);
 	}

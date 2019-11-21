@@ -4,10 +4,10 @@ namespace Kritikos.ProvingGrounds.Hasher.Tests
 
 	public class PasswordHasherTests
 	{
-		private PasswordHasher _hasher = new PasswordHasher();
+		private readonly PasswordHasher hasher = new PasswordHasher();
 
 		[Theory]
-		[Trait("Category","Precalculated")]
+		[Trait("Category", "Precalculated")]
 		[InlineData("6zwd#.", "AQAAAAEAACcQAAAAEDzf+2PNhFLOXJCDzKPuJ7A1sVBD5PJBaD1Qf5UCb46pLHCna31o4Rm2VSDTxC8Alw==")]
 		[InlineData("&ua4kC", "AQAAAAEAACcQAAAAEHAWIwIpD99EX2PcL1pfCY/qZEt0MbEKkwNU0qeSRS5kodfxPevInhlLovBQjBXG5Q==")]
 		[InlineData("}QBU,+p", "AQAAAAEAACcQAAAAEMi1hq4/ntFxwAAorjcswjewfyzl4YVtiToJOB/Ss47RNbEhkFQQKdgqf7aVbuesgQ==")]
@@ -15,7 +15,7 @@ namespace Kritikos.ProvingGrounds.Hasher.Tests
 		[InlineData("M\"]dTB", "AQAAAAEAACcQAAAAEB4QWehBNIk1wjp52nl57Sy8NPBVm/UYY42BPFpCk5bEXj0PqYNThuEYJQt5aFqOKQ==")]
 		public void PrecalculatedHashes(string password, string hash)
 		{
-			var result = _hasher.VerifyHashedPassword(hash, password);
+			var result = hasher.VerifyHashedPassword(hash, password);
 			Assert.True(result);
 		}
 	}
