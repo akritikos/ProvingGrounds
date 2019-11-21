@@ -20,6 +20,7 @@ trigger:
       - tests/*
 variables:
   - group: Environment
+  - group: ApiKeys
   - name: SonarCloudProject
     value: akritikos_ProvingGrounds
 
@@ -122,6 +123,7 @@ jobs:
       script: |
         dotnet tool install --tool-path .. dotnet-sonarscanner
         dotnet tool install --tool-path .. coveralls.net
+        dotnet tool install --tool-path .. Codecov.Tool
       pwsh: true
     displayName: Installing tools
 
