@@ -116,7 +116,7 @@ jobs:
       verbosityRestore: Minimal
       testRunTitle: 'Unit Tests'
   - pwsh: |
-      ../dotnet-sonarscanner end /d:sonar.login="$(SONAR_APIKEY)"
+      ../dotnet-sonarscanner end /d:sonar.login="$(SONAR_KEY)"
     displayName: Publish SonarCloud
   - task: PublishBuildArtifacts@1
     displayName: Publish Test Coverage
