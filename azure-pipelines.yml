@@ -45,7 +45,7 @@ jobs:
       command: 'restore'
       noCache: false
       restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
-      arguments: -Project2ProjectTimeOut 20
+      arguments: -Project2ProjectTimeOut 20 --locked-mode
       verbosityRestore: Normal
 
   - task: PowerShell@2
