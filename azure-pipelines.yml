@@ -121,7 +121,7 @@ jobs:
       targetType: inline
       script: |
         dotnet tool install --tool-path .. dotnet-sonarscanner
-        dotnet tool install --tool-path .. csmacnz.Coveralls
+        dotnet tool install --tool-path .. coveralls.net
       pwsh: true
     displayName: Installing tools
 
