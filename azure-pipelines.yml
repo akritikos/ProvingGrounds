@@ -102,7 +102,8 @@ jobs:
     SONAR_ORGANIZATION: $(SonarCloudOrganization)
     SONAR_APIKEY: $(SonarCloudApiKey)
     SONAR_URL: $(SonarCloudHost)
-    COVERALLS_KEY: $(CoverallsApiKey)
+    COVERALLS_REPO_TOKEN: $(CoverallsApiKey)
+    CODECOV_TOKEN: $(CodeCovApiKey)
   steps:
   - checkout: self
     fetchDepth: 1
@@ -186,7 +187,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        ../csmacnz.Coveralls --repoToken "$(COVERALLS_KEY)" --opencover -i $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --useRelativePaths --commitId "$(Build.SourceVersion)" --commitBranch "$(Build.SourceBranchName)" --commitAuthor "$(Build.RequestedFor)" --commitEmail "$(Build.RequestedForEmail)" --commitMessage "$(Build.SourceVersionMessage)" --jobId "$(Build.BuildId)"
+        ../csmacnz.Coveralls --opencover -i $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --useRelativePaths --commitId "$(Build.SourceVersion)" --commitBranch "$(Build.SourceBranchName)" --commitAuthor "$(Build.RequestedFor)" --commitEmail "$(Build.RequestedForEmail)" --commitMessage "$(Build.SourceVersionMessage)" --jobId "$(Build.BuildId)"
       pwsh: true
     displayName: Coveralls on commit
 
@@ -195,7 +196,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        ../csmacnz.Coveralls --repoToken "$(COVERALLS_KEY)" --opencover -i $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --useRelativePaths --commitId "$(Build.SourceVersion)" --commitBranch "$(Build.SourceBranchName)" --commitAuthor "$(Build.RequestedFor)" --commitEmail "$(Build.RequestedForEmail)" --commitMessage "$(Build.SourceVersionMessage)" --jobId "$(Build.BuildId)" --pullRequest "$(System.PullRequest.PullRequestId)"
+        ../csmacnz.Coveralls --opencover -i $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --useRelativePaths --commitId "$(Build.SourceVersion)" --commitBranch "$(Build.SourceBranchName)" --commitAuthor "$(Build.RequestedFor)" --commitEmail "$(Build.RequestedForEmail)" --commitMessage "$(Build.SourceVersionMessage)" --jobId "$(Build.BuildId)" --pullRequest "$(System.PullRequest.PullRequestId)"
       pwsh: true
     displayName: Coveralls on pull request
 
