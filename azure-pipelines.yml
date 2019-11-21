@@ -140,9 +140,9 @@ jobs:
       targetType: inline
       script: |
         dotnet tool install --tool-path .. dotnet-sonarscanner
-        dotnet tool install --tool-path .. altcover
+        dotnet tool install --tool-path .. altcover.global
       pwsh: true
-    displayName: Installing SonarCloud scanner
+    displayName: Installing required dotnet tools
 
   - task: PowerShell@2
     condition: ne(variables['Build.Reason'], 'PullRequest')
