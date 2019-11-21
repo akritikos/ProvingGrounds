@@ -13,7 +13,6 @@ trigger:
       - feature/*
       - bugfix/*
       - release/*
-      - hotfix/*
   paths:
     include:
       - azure-pipelines.yml
@@ -21,26 +20,21 @@ trigger:
       - tests/*
 variables:
   - group: Environment
-  - name: NUGET_PACKAGES
-    value: $(Pipeline.Workspace)/.nuget/packages
+  - name: SonarCloudProject
+    value: kritikos-io_Extensions
 
 jobs:
 - job: Setup
   pool:
     vmImage: windows-latest
   steps:
-  - task: Cache@2
-    inputs:
-      key: '**/packages.lock.json'
-      path: '$(Pipeline.Workspace)/.nuget/packages'
-
   - task: DotNetCoreCLI@2
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      arguments: '--locked-mode'
-      restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
       noCache: false
+      restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
+      arguments: -Project2ProjectTimeOut 20
       verbosityRestore: Normal
 
   - task: PowerShell@2
@@ -71,7 +65,7 @@ jobs:
 
 - job: Building
   pool:
-    vmImage: windows-latest
+    vmImage: ubuntu-latest
   dependsOn:
     - Setup
   variables:
@@ -80,19 +74,31 @@ jobs:
   - checkout: self
     fetchDepth: 1
 
-  - task: Cache@2
-    inputs:
-      key: '**/packages.lock.json'
-      path: '$(Pipeline.Workspace)/.nuget/packages'
-
   - task: DotNetCoreCLI@2
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      arguments: '--locked-mode'
-      restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
       noCache: false
+      restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
+      arguments: -Project2ProjectTimeOut 20
       verbosityRestore: Normal
+
+  - task: PowerShell@2
+    inputs:
+      targetType: inline
+      script: |
+        dotnet tool install --tool-path .. dotnet-sonarscanner
+      pwsh: true
+    displayName: Installing SonarCloud scanner
+
+  - task: PowerShell@2
+    inputs:
+      targetType: inline
+      script: |
+        ../dotnet-sonarscanner begin /k:$(SonarCloudProject) /v:$(Version) /o:(SonarCloudOrganization) /d:sonar.host.url=$(SonarCloudHost) /d:sonar.login=$(SonarCloudApiKey)
+      pwsh: true
+    displayName: Scans project using SonarCloud
+    name: versioning
 
   - task: DotNetCoreCLI@2
     displayName: Building Projects
@@ -103,6 +109,15 @@ jobs:
       arguments: -o $(build.artifactStagingDirectory)/build
       versioningScheme: byEnvVar
       versionEnvVar: Version
+
+  - task: PowerShell@2
+    inputs:
+      targetType: inline
+      script: |
+        ../dotnet sonarscanner end /d:sonar.login=68577583b7043dba54d96fc4022d32ba5d3189d9
+      pwsh: true
+    displayName: Uploads SonarCloud results
+    name: versioning
 
   - task: PublishBuildArtifacts@1
     displayName: Publish build artifacts
@@ -130,7 +145,7 @@ jobs:
 
 - job: Testing
   pool:
-    vmImage: windows-latest
+    vmImage: ubuntu-latest
   dependsOn:
     - Setup
   variables:
@@ -139,18 +154,13 @@ jobs:
   - checkout: self
     fetchDepth: 1
 
-  - task: Cache@2
-    inputs:
-      key: '**/packages.lock.json'
-      path: '$(Pipeline.Workspace)/.nuget/packages'
-
   - task: DotNetCoreCLI@2
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      arguments: '--locked-mode'
-      restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
       noCache: false
+      restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
+      arguments: -Project2ProjectTimeOut 20
       verbosityRestore: Normal
 
   - task: DotNetCoreCLI@2
