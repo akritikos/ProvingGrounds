@@ -185,9 +185,12 @@ jobs:
     displayName: Testing implementations
     inputs:
       command: test
+      projects: 'tests/*/*.*proj'
       arguments: '--no-build'
       configuration: 'Debug'
       testRunTitle: 'Running tests'
+      verbosityPack: normal
+      verbosityRestore: normal
 
   - task: PowerShell@2
     inputs:
