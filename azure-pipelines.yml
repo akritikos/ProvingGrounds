@@ -176,7 +176,7 @@ jobs:
     displayName: Testing implementations
     inputs:
       command: test
-      arguments: '--logger trx --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json'
+      arguments: '--logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json'
       configuration: 'Debug'
       testRunTitle: 'Running tests'
       publishTestResults: true
