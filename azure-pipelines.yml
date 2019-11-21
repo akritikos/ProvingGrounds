@@ -98,7 +98,6 @@ jobs:
     displayName: Building Projects
     inputs:
       command: build
-      projects: src/*/*.csproj
       configuration: $(BuildConfiguration)
       arguments: -o $(build.artifactStagingDirectory)/build
       versioningScheme: byEnvVar
