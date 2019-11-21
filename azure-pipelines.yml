@@ -66,9 +66,11 @@ jobs:
       command: 'pack'
       packagesToPack: 'src/*/*.csproj'
       packDirectory: '$(build.artifactStagingDirectory)/nuget'
-      versioningScheme: 'byEnvVar'
+      configuration: $(BuildConfiguration)
+      versioningScheme: byEnvVar
       versionEnvVar: Version
-      verbosityPack: Normal
+      verbosityRestore: Normal
+      verbosityPack: normal
   - task: PublishBuildArtifacts@1
     displayName: Publish Nugets
     inputs:
