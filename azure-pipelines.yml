@@ -98,7 +98,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        ../dotnet-sonarscanner begin /k:$env:SonarCloudProject /v:$env:Version /o:$env:SONAR_ORGANIZATION /d:sonar.host.url=$env:SONAR_URL /d:sonar.login=$env:SONAR_APIKEY
+        ../dotnet-sonarscanner begin /k:"$(SonarCloudProject)" /v:"$(Version)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_APIKEY)"
       pwsh: true
     displayName: Scans project using SonarCloud
 
@@ -116,7 +116,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        ../dotnet sonarscanner end /d:sonar.login=$env:SonarCloudApiKey
+        ../dotnet sonarscanner end /d:sonar.login="$(SONAR_APIKEY)"
       pwsh: true
     displayName: Uploads SonarCloud results
 
