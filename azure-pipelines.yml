@@ -98,7 +98,6 @@ jobs:
         ../dotnet-sonarscanner begin /k:$(SonarCloudProject) /v:$(Version) /o:(SonarCloudOrganization) /d:sonar.host.url=$(SonarCloudHost) /d:sonar.login=$(SonarCloudApiKey)
       pwsh: true
     displayName: Scans project using SonarCloud
-    name: versioning
 
   - task: DotNetCoreCLI@2
     displayName: Building Projects
@@ -117,7 +116,6 @@ jobs:
         ../dotnet sonarscanner end /d:sonar.login=68577583b7043dba54d96fc4022d32ba5d3189d9
       pwsh: true
     displayName: Uploads SonarCloud results
-    name: versioning
 
   - task: PublishBuildArtifacts@1
     displayName: Publish build artifacts
