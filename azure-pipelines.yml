@@ -70,6 +70,9 @@ jobs:
     - Setup
   variables:
     Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
+    SONAR_ORGANIZATION: $(SonarCloudOrganization)
+    SONAR_APIKEY: $(SonarCloudApiKey)
+    SONAR_URL: $(SonarCloudHost)
   steps:
   - checkout: self
     fetchDepth: 1
@@ -95,7 +98,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        ../dotnet-sonarscanner begin /k:$env:SonarCloudProject /v:$env:Version /o:$env:SonarCloudOrganization /d:sonar.host.url=$env:SonarCloudHost /d:sonar.login=$env:SonarCloudApiKey
+        ../dotnet-sonarscanner begin /k:$env:SonarCloudProject /v:$env:Version /o:$env:SONAR_ORGANIZATION /d:sonar.host.url=$env:SONAR_URL /d:sonar.login=$env:SONAR_APIKEY
       pwsh: true
     displayName: Scans project using SonarCloud
 
