@@ -38,9 +38,9 @@ jobs:
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      noCache: false
+      arguments: '--locked-mode'
       restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
-      arguments: -Project2ProjectTimeOut 20 --locked-mode
+      noCache: false
       verbosityRestore: Normal
 
   - task: PowerShell@2
@@ -71,7 +71,7 @@ jobs:
 
 - job: Building
   pool:
-    vmImage: ubuntu-latest
+    vmImage: windows-latest
   dependsOn:
     - Setup
   variables:
@@ -89,9 +89,9 @@ jobs:
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      noCache: false
+      arguments: '--locked-mode'
       restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
-      arguments: -Project2ProjectTimeOut 20
+      noCache: false
       verbosityRestore: Normal
 
   - task: DotNetCoreCLI@2
@@ -130,7 +130,7 @@ jobs:
 
 - job: Testing
   pool:
-    vmImage: ubuntu-latest
+    vmImage: windows-latest
   dependsOn:
     - Setup
   variables:
@@ -148,9 +148,9 @@ jobs:
     displayName: Restoring nugets
     inputs:
       command: 'restore'
-      noCache: false
+      arguments: '--locked-mode'
       restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
-      arguments: -Project2ProjectTimeOut 20
+      noCache: false
       verbosityRestore: Normal
 
   - task: DotNetCoreCLI@2
