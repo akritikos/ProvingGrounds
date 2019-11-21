@@ -41,7 +41,7 @@ jobs:
     displayName: 'Use explicit SDK version'
     inputs:
       packageType: 'sdk'
-      version: '3.0'
+      version: '3.x'
       includePreviewVersions: true
       performMultiLevelLookup: true
 
