@@ -141,7 +141,7 @@ jobs:
       script: |
         dotnet tool install --tool-path .. dotnet-sonarscanner
       pwsh: true
-    displayName: Installing required dotnet tools
+    displayName: Installing tools
 
   - task: PowerShell@2
     condition: ne(variables['Build.Reason'], 'PullRequest')
@@ -150,7 +150,7 @@ jobs:
       script: |
         ../dotnet-sonarscanner begin /k:"$(SonarCloudProject)" /v:"$(Version)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_APIKEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage/coverage.xml" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY)
       pwsh: true
-    displayName: Scans project using SonarCloud on normal commits
+    displayName: SonarCloud on normal commits
 
   - task: PowerShell@2
     condition: eq(variables['Build.Reason'], 'PullRequest')
@@ -159,7 +159,7 @@ jobs:
       script: |
         ../dotnet-sonarscanner begin /k:"$(SonarCloudProject)" /v:"$(Version)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_APIKEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage/coverage.xml" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY) /d:sonar.pullrequest.key="$(System.PullRequest.PullRequestId)" /d:sonar.pullrequest.provider="github"
       pwsh: true
-    displayName: Scans project using SonarCloud on pull requests
+    displayName: SonarCloud on pull requests
 
   - task: DotNetCoreCLI@2
     name: dotnetBuild
@@ -172,7 +172,6 @@ jobs:
       versionEnvVar: Version
 
   - task: DotNetCoreCLI@2
-    name: dotnetTest
     displayName: Testing implementations
     inputs:
       command: test
@@ -195,7 +194,7 @@ jobs:
       script: |
         ../dotnet-sonarscanner end /d:sonar.login="$(SONAR_APIKEY)"
       pwsh: true
-    displayName: Uploads SonarCloud results
+    displayName: Publish SonarCloud
 
 - job: Publishing
   pool:
