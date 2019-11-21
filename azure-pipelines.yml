@@ -45,9 +45,9 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        dotnet tool restore gitversion.tool
+        dotnet tool restore
       pwsh: true
-    displayName: Installing Dotnet Tools
+    displayName: Restoring Dotnet Tools
 
   - task: PowerShell@2
     inputs:
