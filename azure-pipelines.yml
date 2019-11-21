@@ -176,7 +176,7 @@ jobs:
     displayName: Testing implementations
     inputs:
       command: test
-      arguments: "$(Build.Repository.Name).sln --no-build /p:CollectCoverage=true /p:CoverletOutputFormat='json,opencover' /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json"
+      arguments: "--no-build /p:CollectCoverage=true /p:CoverletOutputFormat='json,opencover' /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json"
       configuration: 'Debug'
       testRunTitle: 'Running tests'
       publishTestResults: true
