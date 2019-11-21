@@ -39,7 +39,7 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   dependsOn:
-    - Setup
+    - Version
   variables:
     Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
   steps:
@@ -80,7 +80,7 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   dependsOn:
-    - Setup
+    - Version
   variables:
     Version: $[ dependencies.Setup.outputs['versioning.gitVersion'] ]
     GITHUB_KEY: $(GitHubApiKey)
