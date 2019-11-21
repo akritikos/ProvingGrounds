@@ -42,7 +42,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        dotnet tool restore
+        dotnet tool install --global gitversion.tool
       pwsh: true
     displayName: Restoring Dotnet Tools
 
