@@ -190,6 +190,15 @@ jobs:
       pwsh: true
     displayName: Coveralls on commit
 
+  - task: PowerShell@2
+    condition: eq(variables['Build.Reason'], 'PullRequest')
+    inputs:
+      targetType: inline
+      script: |
+        ../csmacnz.Coveralls --repoToken "$(COVERALLS_KEY)" --opencover -i $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --useRelativePaths --commitId "$(Build.SourceVersion)" --commitBranch "$(Build.SourceBranchName)" --commitAuthor "$(Build.RequestedFor)" --commitEmail "$(Build.RequestedForEmail)" --commitMessage "$(Build.SourceVersionMessage)" --jobId "$(Build.BuildId)" --pullRequest "$(System.PullRequest.PullRequestId)"
+      pwsh: true
+    displayName: Coveralls on pull request
+
 - job: Publishing
   pool:
     vmImage: ubuntu-latest
