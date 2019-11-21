@@ -67,6 +67,7 @@ jobs:
     fetchDepth: 1
 
   - task: DotNetCoreCLI@2
+    condition: false
     displayName: Restoring nugets
     inputs:
       command: 'restore'
