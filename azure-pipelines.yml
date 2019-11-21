@@ -29,14 +29,6 @@ jobs:
   pool:
     vmImage: windows-latest
   steps:
-  - task: PowerShell@2
-    inputs:
-      targetType: inline
-      script: |
-        dotnet --info
-      pwsh: true
-    displayName: Echoes dotnet versions
-
   - task: UseDotNet@2
     displayName: 'Use explicit SDK version'
     inputs:
