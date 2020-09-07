@@ -53,7 +53,7 @@ jobs:
     inputs:
       command: 'build'
       configuration: $(BuildConfiguration)
-      arguments: '-o $(build.artifactStagingDirectory)/build --no-restore --no-logo'
+      arguments: '--no-restore --no-logo -o $(build.artifactStagingDirectory)/build'
       versioningScheme: byBuildNumber
   - task: PublishBuildArtifacts@1
     displayName: Publish Build
