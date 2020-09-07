@@ -31,8 +31,9 @@ jobs:
     - pwsh: dotnet tool install --tool-path .. gitversion.tool
       displayName: Install GitVersion
     - pwsh: |
+        ../dotnet-gitversion /output buildserver /updateassemblyinfo
         echo "##vso[task.setvariable variable=gitVersion;isOutput=true]$(../dotnet-gitversion /output json /showvariable SemVer)"
-        "Current version: $(../dotnet-gitversion /output json /output buildserver /showvariable NugetVersion)"
+        "Current version: $(../dotnet-gitversion /output json /showvariable NugetVersion)"
       displayName: Sets SemVer
       name: versioning
 - job: Build
