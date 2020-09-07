@@ -51,11 +51,11 @@
 </ItemGroup>
 
 <ItemGroup Label="License Import" Condition="Exists('$(SolutionDir)\LICENSE.md')">
-	<None Include="$(SolutionDir)\LICENSE.md" Pack="true" PackagePath="$(SolutionDir)\LICENSE.md" />
+	<None Include="$(SolutionDir)\LICENSE.md" Pack="true" />
 </ItemGroup>
 
 <PropertyGroup Label="License" Condition="Exists('$(SolutionDir)\LICENSE.md')">
-	<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+	<PackageLicenseFile>$(SolutionDir)\LICENSE.md</PackageLicenseFile>
 </PropertyGroup>
 
 <PropertyGroup Label="Package">
