@@ -32,8 +32,6 @@ jobs:
       displayName: Install GitVersion
     - pwsh: |
         ../dotnet-gitversion /output buildserver /updateassemblyinfo
-        # echo "##vso[task.setvariable variable=gitVersion;isOutput=true]$GitVersion.SemVer"
-        "Current version: $ENV:GITVERSION_SEMVER"
       displayName: Sets SemVer
       name: versioning
 - job: Build
@@ -41,8 +39,6 @@ jobs:
     vmImage: ubuntu-latest
   dependsOn:
     - Version
-  variables:
-    Version: $[ dependencies.Version.outputs['versioning.GITVERSION_SEMVER'] ]
   steps:
   - checkout: self
     fetchDepth: 1
@@ -52,8 +48,7 @@ jobs:
       command: 'build'
       configuration: $(BuildConfiguration)
       arguments: '-o $(build.artifactStagingDirectory)/build'
-      versioningScheme: byEnvVar
-      versionEnvVar: Version
+      versioningScheme: byBuildNumber
       verbosityRestore: Minimal
   - task: PublishBuildArtifacts@1
     displayName: Publish Build
@@ -84,7 +79,6 @@ jobs:
   dependsOn:
     - Version
   variables:
-    Version: $[ dependencies.Version.outputs['versioning.gitVersion'] ]
     GITHUB_KEY: $(GitHubApiKey)
     SONAR_ORG: $(SonarCloudOrganization)
     SONAR_KEY: $(SonarCloudApiKey)
@@ -100,11 +94,11 @@ jobs:
       dotnet tool install --tool-path .. Codecov.Tool
     displayName: Install Tools
   - pwsh: |
-      ../dotnet-sonarscanner begin /k:"$(SONAR_PROJECT)" /v:"$(Version)" /o:"$(SONAR_ORG)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_KEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage/coverage.opencover.xml" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY)
+      ../dotnet-sonarscanner begin /k:"$(SONAR_PROJECT)" /v:"$(Build.BuildNumber)" /o:"$(SONAR_ORG)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_KEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage/coverage.opencover.xml" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY)
     condition: ne(variables['Build.Reason'], 'PullRequest')
     displayName: SonarCloud (commit)
   - pwsh: |
-      ../dotnet-sonarscanner begin /k:"$(SONAR_PROJECT)" /v:"$(Version)" /o:"$(SONAR_ORG)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_KEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage/coverage.opencover.xml" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY) /d:sonar.pullrequest.key="$(System.PullRequest.PullRequestId)" /d:sonar.pullrequest.provider="github"
+      ../dotnet-sonarscanner begin /k:"$(SONAR_PROJECT)" /v:"$(Build.BuildNumber)" /o:"$(SONAR_ORG)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_KEY)" /d:sonar.cs.opencover.reportsPaths="$(build.artifactStagingDirectory)/coverage/coverage.opencover.xml" /d:sonar.branch.name="$(Build.SourceBranchName)" /d:sonar.github.repository="$(Build.Repository.Name)" /d:sonar.github.oauth=$(GITHUB_KEY) /d:sonar.pullrequest.key="$(System.PullRequest.PullRequestId)" /d:sonar.pullrequest.provider="github"
     condition: eq(variables['Build.Reason'], 'PullRequest')
     displayName: SonarCloud (PR)
   - task: DotNetCoreCLI@2
