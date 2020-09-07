@@ -69,7 +69,8 @@ jobs:
       packDirectory: '$(build.artifactStagingDirectory)/nuget'
       configuration: $(BuildConfiguration)
       versioningScheme: byEnvVar
-      versionEnvVar: Version
+      # versionEnvVar: Version
+      versionEnvVar: GitVersion.SemVer
       verbosityRestore: Minimal
       verbosityPack: Minimal
   - task: PublishBuildArtifacts@1

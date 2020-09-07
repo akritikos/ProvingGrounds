@@ -50,13 +50,9 @@
 	<AdditionalFiles Include="$(MSBuildThisFileDirectory)\.config\stylecop.json" Link="stylecop.json" />
 </ItemGroup>
 
-<ItemGroup Label="License Import" Condition="Exists('$(SolutionDir)\LICENSE.md')">
-	<None Include="$(SolutionDir)\LICENSE.md" Pack="true" />
+<ItemGroup Label="License Import" Condition="Exists('$(MSBuildThisFileDirectory)\LICENSE.md')">
+	<None Include="$(MSBuildThisFileDirectory)\LICENSE.md" Pack="true" PackagePath="" />
 </ItemGroup>
-
-<PropertyGroup Label="License" Condition="Exists('$(SolutionDir)\LICENSE.md')">
-	<PackageLicenseFile>$(SolutionDir)\LICENSE.md</PackageLicenseFile>
-</PropertyGroup>
 
 <PropertyGroup Label="Package">
 	<Company>Kritikos IO</Company>
