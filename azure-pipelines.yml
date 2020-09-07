@@ -43,13 +43,18 @@ jobs:
   - checkout: self
     fetchDepth: 1
   - task: DotNetCoreCLI@2
+    inputs:
+      command: 'restore'
+      arguments: '--locked-mode --no-logo'
+      restoreDirectory: '$(Pipeline.Workspace)/.nuget/packages'
+      verbosityRestore: Minimal
+  - task: DotNetCoreCLI@2
     displayName: Build Solution
     inputs:
       command: 'build'
       configuration: $(BuildConfiguration)
-      arguments: '-o $(build.artifactStagingDirectory)/build'
+      arguments: '-o $(build.artifactStagingDirectory)/build --no-restore --no-logo'
       versioningScheme: byBuildNumber
-      verbosityRestore: Minimal
   - task: PublishBuildArtifacts@1
     displayName: Publish Build
     inputs:
@@ -60,9 +65,9 @@ jobs:
     displayName: Pack Nugets
     inputs:
       command: 'pack'
+      arguments: '--no-logo'
       packagesToPack: 'src/*/*.csproj'
       packDirectory: '$(build.artifactStagingDirectory)/nuget'
-      nobuild: true
       configuration: $(BuildConfiguration)
       versioningScheme: byBuildNumber
       verbosityRestore: Minimal
