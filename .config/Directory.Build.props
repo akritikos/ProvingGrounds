@@ -22,10 +22,6 @@
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Label="Condition Initialization">
-		<IsTest>false</IsTest>
-	</PropertyGroup>
-
 	<PropertyGroup Label="CI Build">
 		<!-- https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#system-variables -->
 		<ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">True</ContinuousIntegrationBuild>
