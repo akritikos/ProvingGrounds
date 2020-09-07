@@ -32,8 +32,8 @@ jobs:
       displayName: Install GitVersion
     - pwsh: |
         ../dotnet-gitversion /output buildserver /updateassemblyinfo
-        echo "##vso[task.setvariable variable=gitVersion;isOutput=true]$(../dotnet-gitversion /output json /showvariable SemVer)"
-        "Current version: $(../dotnet-gitversion /output json /showvariable NugetVersion)"
+        echo "##vso[task.setvariable variable=gitVersion;isOutput=true]$(GitVersion.SemVer)"
+        "Current version: $(GitVersion.SemVer)"
       displayName: Sets SemVer
       name: versioning
 - job: Build
@@ -69,8 +69,7 @@ jobs:
       packDirectory: '$(build.artifactStagingDirectory)/nuget'
       configuration: $(BuildConfiguration)
       versioningScheme: byEnvVar
-      # versionEnvVar: Version
-      versionEnvVar: GitVersion.SemVer
+      versionEnvVar: Version
       verbosityRestore: Minimal
       verbosityPack: Minimal
   - task: PublishBuildArtifacts@1
