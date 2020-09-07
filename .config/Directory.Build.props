@@ -14,6 +14,8 @@
 	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	<!-- Enable lock files -->
 	<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+	<!-- Disable nugets from SDK fallback folders -->
+	<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
 	<Nullable>enable</Nullable>
 	<EnableNETAnalyzers>true</EnableNETAnalyzers>
 	<AnalysisLevel>latest</AnalysisLevel>
