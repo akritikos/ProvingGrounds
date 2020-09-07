@@ -1,102 +1,114 @@
 <Project>
-<PropertyGroup Label="Project">
-	<!-- Prepend organization name to default namespace -->
-	<RootNamespace>Kritikos.$(MSBuildProjectName)</RootNamespace>
-	<!-- Generate documentation file and ignore warnings for undocumented elements -->
-	<GenerateDocumentationFile>true</GenerateDocumentationFile>
-	<NoWarn>1591</NoWarn>
-	<!-- Error out upon trying to package projects marked as not packable -->
-	<WarnOnPackingNonPackableProject>true</WarnOnPackingNonPackableProject>
-	<!-- Disable warnings on preview SDK versions -->
-	<SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
-	<!-- Remove framework/runtime folders from output paths -->
-	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-	<!-- Enable lock files -->
-	<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-	<!-- Disable nugets from SDK fallback folders -->
-	<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-	<Nullable>enable</Nullable>
-	<EnableNETAnalyzers>true</EnableNETAnalyzers>
-	<AnalysisLevel>latest</AnalysisLevel>
-	<LangVersion>preview</LangVersion>
-</PropertyGroup>
+	<PropertyGroup Label="Project">
+		<!-- Prepend organization name to default namespace -->
+		<RootNamespace>Kritikos.$(MSBuildProjectName)</RootNamespace>
+		<!-- Generate documentation file and ignore warnings for undocumented elements -->
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>1591</NoWarn>
+		<!-- Error out upon trying to package projects marked as not packable -->
+		<WarnOnPackingNonPackableProject>true</WarnOnPackingNonPackableProject>
+		<!-- Disable warnings on preview SDK versions -->
+		<SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+		<!-- Remove framework/runtime folders from output paths -->
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<!-- Enable lock files -->
+		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+		<!-- Disable nugets from SDK fallback folders -->
+		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+		<Nullable Condition="'$(IsPackable)' != 'true'">enable</Nullable>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisLevel>latest</AnalysisLevel>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
 
-<PropertyGroup Label="CI Build">
-	<!-- https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#system-variables -->
-	<ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">True</ContinuousIntegrationBuild>
+	<PropertyGroup Label="Condition Initialization">
+		<IsTest>false</IsTest>
+	</PropertyGroup>
 
-	<!-- https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables -->
-	<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
+	<PropertyGroup Label="CI Build">
+		<!-- https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#system-variables -->
+		<ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">True</ContinuousIntegrationBuild>
 
-	<!-- https://docs.gitlab.com/ee/ci/variables/predefined_variables.html -->
-	<ContinuousIntegrationBuild Condition="'$(GITLAB_CI)' == 'true'">True</ContinuousIntegrationBuild>
-</PropertyGroup>
+		<!-- https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables -->
+		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
 
-<PropertyGroup Label="CI" Condition="'$(ContinuousIntegrationBuild)' == 'true'">
-	<RestoreLockedMode>true</RestoreLockedMode>
-</PropertyGroup>
+		<!-- https://docs.gitlab.com/ee/ci/variables/predefined_variables.html -->
+		<ContinuousIntegrationBuild Condition="'$(GITLAB_CI)' == 'true'">True</ContinuousIntegrationBuild>
+	</PropertyGroup>
 
-<ItemGroup>
-	<ProjectCapability Include="DynamicFileNesting" />
-	<ProjectCapability Include="DynamicDependentFile" />
-</ItemGroup>
+	<PropertyGroup Label="CI" Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+		<RestoreLockedMode>true</RestoreLockedMode>
+	</PropertyGroup>
 
-<PropertyGroup Label="Code Analysis Ruleset" Condition="Exists('$(MSBuildThisFileDirectory)\.config\dotnet.ruleset')">
-	<CodeAnalysisRuleset>$(MSBuildThisFileDirectory)\.config\dotnet.ruleset</CodeAnalysisRuleset>
-</PropertyGroup>
+	<ItemGroup>
+		<ProjectCapability Include="DynamicFileNesting" />
+		<ProjectCapability Include="DynamicDependentFile" />
+	</ItemGroup>
 
-<ItemGroup Label="Code Analysis Configuration" Condition="Exists('$(MSBuildThisFileDirectory)\.config\stylecop.json')">
-	<AdditionalFiles Include="$(MSBuildThisFileDirectory)\.config\stylecop.json" Link="stylecop.json" />
-</ItemGroup>
+	<PropertyGroup Label="Code Analysis Ruleset" Condition="Exists('$(MSBuildThisFileDirectory)\.config\dotnet.ruleset')">
+		<CodeAnalysisRuleset>$(MSBuildThisFileDirectory)\.config\dotnet.ruleset</CodeAnalysisRuleset>
+	</PropertyGroup>
 
-<ItemGroup Label="License Import" Condition="Exists('$(MSBuildThisFileDirectory)\LICENSE.md')">
-	<None Include="$(MSBuildThisFileDirectory)\LICENSE.md" Pack="true" PackagePath="" />
-</ItemGroup>
+	<ItemGroup Label="Code Analysis Configuration" Condition="Exists('$(MSBuildThisFileDirectory)\.config\stylecop.json')">
+		<AdditionalFiles Include="$(MSBuildThisFileDirectory)\.config\stylecop.json" Link="stylecop.json" />
+	</ItemGroup>
 
-<PropertyGroup Label="Package">
-	<Company>Kritikos IO</Company>
-	<Authors>Alexandros Kritikos</Authors>
-	<PublishRepositoryUrl>true</PublishRepositoryUrl>
-	<RepositoryType>git</RepositoryType>
-	<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-	<!-- Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-	<PublishRepositoryUrl>true</PublishRepositoryUrl>
-	<!-- Embed source files that are not tracked by the source control manager in the PDB -->
-	<EmbedUntrackedSources>true</EmbedUntrackedSources>
-	<!-- Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
-	<IncludeSymbols>true</IncludeSymbols>
-	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-</PropertyGroup>
+	<ItemGroup Label="License Import" Condition="Exists('$(MSBuildThisFileDirectory)\LICENSE.md')">
+		<None Include="$(MSBuildThisFileDirectory)\LICENSE.md" Pack="true" PackagePath="" />
+	</ItemGroup>
 
-<ItemGroup Label="SourceLink">
-	<SourceRoot Include="$(SolutionDir)/"/>
-	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-	</PackageReference>
-</ItemGroup>
+	<PropertyGroup Label="Package">
+		<Company>Kritikos IO</Company>
+		<Authors>Alexandros Kritikos</Authors>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<!-- Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<!-- Embed source files that are not tracked by the source control manager in the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<!-- Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
 
-<ItemGroup Label="Analysers">
-	<!-- <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+	<ItemGroup Label="SourceLink" Condition="'$(IsPackable)'">
+		<SourceRoot Include="$(SolutionDir)/"/>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference> -->
-	<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="SerilogAnalyzer" Version="0.15.0">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="SmartanAlyzers.ExceptionAnalyzer" Version="1.0.10">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="SmartAnalyzers.MultithreadingAnalyzer" Version="1.1.31">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-	</PackageReference>
-</ItemGroup>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Label="Analysers" Condition="'$(IsPackable)'">
+		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="SerilogAnalyzer" Version="0.15.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="SmartanAlyzers.ExceptionAnalyzer" Version="1.0.10">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="SmartAnalyzers.MultithreadingAnalyzer" Version="1.1.31">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Label="Tests" Condition="'!$(IsPackable)'">
+		<PackageReference Include="coverlet.msbuild" Version="2.9.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
 </Project>
