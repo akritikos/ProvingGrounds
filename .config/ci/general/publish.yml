@@ -1,7 +1,7 @@
 parameters:
   - name: pathtoPublish
     type: string
-    default: $(build.artifactStagingDirectory)/build
+    default: $(build.artifactStagingDirectory)/publish
   - name: artifactName
     type: string
 
