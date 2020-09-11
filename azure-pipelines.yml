@@ -127,6 +127,7 @@ jobs:
       ../codecov --token "$(CodeCovApiKey)" --file $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --branch "$(Build.SourceBranchName)" --sha "$(Build.SourceVersion)" --pr "$(System.PullRequest.PullRequestId)"
     condition: eq(variables['Build.Reason'], 'PullRequest')
     displayName: Push Coverage (PR)
+  - template: .config/ci/general/coverage.yml
 - job: Publish
   pool:
     vmImage: ubuntu-latest
