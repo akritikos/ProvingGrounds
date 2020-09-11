@@ -36,6 +36,10 @@ stages:
           - template: .config/ci/dotnet/nuget-cache.yml
           - template: .config/ci/dotnet/restore.yml
           - template: .config/ci/dotnet/build.yml
+          - template: .config/ci/dotnet/publish.yml
+          - template: .config/ci/general/publish.yml
+            parameters:
+              artifactName: publish
   - stage: Test
     dependsOn: Version
     jobs:

@@ -1,0 +1,12 @@
+steps:
+  - task: DotNetCoreCLI@2
+    displayName: Pack Nugets
+    inputs:
+      command: 'pack'
+      arguments: '--nologo'
+      packagesToPack: 'src/*/*.csproj'
+      packDirectory: '$(build.artifactStagingDirectory)/nuget'
+      configuration: $(BuildConfiguration)
+      versioningScheme: byBuildNumber
+      verbosityRestore: Minimal
+      verbosityPack: Minimal
