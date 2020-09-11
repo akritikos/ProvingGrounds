@@ -103,7 +103,7 @@ jobs:
     inputs:
       command: 'test'
       configuration: 'Debug'
-      arguments: '--logger trx /p:CollectCoverage=true /p:CoverletOutputFormat="opencover,cobertura" /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage/ /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json'
+      arguments: '--logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=\'opencover,cobertura\' /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage/ /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json'
       publishTestResults: true
       verbosityPack: Minimal
       verbosityRestore: Minimal
