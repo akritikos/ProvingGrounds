@@ -1,3 +1,4 @@
+jobs:
 - job: Version
   pool:
     vmImage: ubuntu-latest
