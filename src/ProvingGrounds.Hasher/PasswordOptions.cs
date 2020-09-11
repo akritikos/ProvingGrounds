@@ -4,12 +4,12 @@ namespace Kritikos.ProvingGrounds.Hasher
 	{
 		public int RequiredLength { get; set; } = 6;
 
-		public bool RequireNonAlphanumeric { get; set; } = false;
+		public bool RequireNonAlphanumeric { get; set; }
 
-		public bool RequireLowercase { get; set; } = true;
+		public bool RequireLowercase { get; set; }
 
-		public bool RequireUppercase { get; set; } = false;
+		public bool RequireUppercase { get; set; }
 
-		public bool RequireDigit { get; set; } = false;
+		public bool RequireDigit { get; set; }
 	}
 }
