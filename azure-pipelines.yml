@@ -55,3 +55,8 @@ stages:
     dependsOn:
     - Build
     - Test
+  - stage: PublishRelease
+    condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    dependsOn:
+      - PublishBleeding
+
