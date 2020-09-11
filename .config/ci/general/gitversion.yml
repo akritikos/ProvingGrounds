@@ -4,7 +4,6 @@ jobs:
     - template: ../general/dotnet-tool.yml
       parameters:
         toolName: gitversion.tool
-      displayName: Install GitVersion
       # - pwsh: dotnet tool install --tool-path .. gitversion.tool
       #   displayName: Install GitVersion
     - pwsh: ../dotnet-gitversion /output buildserver /updateassemblyinfo
