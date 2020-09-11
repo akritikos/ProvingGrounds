@@ -1,7 +1,7 @@
 parameters:
 - name: configuration
-  default: $(BuildConfiguration)
   type: string
+  default: $(BuildConfiguration)
 
 steps:
 - task: DotNetCoreCLI@2
@@ -9,5 +9,5 @@ steps:
   inputs:
     command: 'build'
     configuration: ${{ parameters.configuration }}
-    arguments: '--no-restore --nologo -o $(build.artifactStagingDirectory)/build'
+    arguments: '--no-restore --nologo'
     versioningScheme: byBuildNumber
