@@ -1,14 +1,14 @@
 parameters:
 - name: 'key'
-	default: '"$(Agent.OS)"'
-	type: string
+  default: '"$(Agent.OS)"'
+  type: string
 - name: 'path'
-	type: 'string'
+  type: 'string'
 
 steps:
 - task: Cache@2
-	inputs:
-		key: ${{ parameters.key }}
-		path: ${{ parameters.key }}
-	displayName: Cache artifacts
+  inputs:
+    key: ${{ parameters.key }}
+    path: ${{ parameters.key }}
+  displayName: Cache artifacts
 
