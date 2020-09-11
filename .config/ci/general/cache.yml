@@ -1,7 +1,10 @@
 parameters:
-- name: 'key'
-  default: '"$(Agent.OS)"'
+- name: artifactType
   type: string
+  default: artifact
+- name: 'key'
+  type: string
+  default: '"$(Agent.OS)"'
 - name: 'path'
   type: 'string'
 
@@ -10,4 +13,4 @@ steps:
   inputs:
     key: ${{ parameters.key }}
     path: ${{ parameters.path }}
-  displayName: Cache artifacts
+  displayName: Restore ${{ parameters.artifactType }} cache

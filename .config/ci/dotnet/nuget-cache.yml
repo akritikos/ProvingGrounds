@@ -1,5 +1,6 @@
 steps:
 - template: ../general/cache.yml
   parameters:
+    artifactType: nuget
     key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**'
     path: $(NUGET_PACKAGES)
