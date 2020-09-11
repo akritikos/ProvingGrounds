@@ -24,16 +24,17 @@ variables:
   - name: SONAR_PROJECT
     value: akritikos_ProvingGrounds
 jobs:
-- job: Version
-  pool:
-    vmImage: ubuntu-latest
-  steps:
-    - pwsh: dotnet tool install --tool-path .. gitversion.tool
-      displayName: Install GitVersion
-    - pwsh: |
-        ../dotnet-gitversion /output buildserver /updateassemblyinfo
-      displayName: Sets SemVer
-      name: versioning
+- template: .config/version/gitversion.yml
+# - job: Version
+#   pool:
+#     vmImage: ubuntu-latest
+#   steps:
+#     - pwsh: dotnet tool install --tool-path .. gitversion.tool
+#       displayName: Install GitVersion
+#     - pwsh: |
+#         ../dotnet-gitversion /output buildserver /updateassemblyinfo
+#       displayName: Sets SemVer
+#       name: versioning
 - job: Build
   pool:
     vmImage: ubuntu-latest
