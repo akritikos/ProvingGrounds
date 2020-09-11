@@ -8,5 +8,6 @@ steps:
   displayName: Publish projects
   inputs:
     command: 'publish'
+    configuration: $(BuildConfiguration)
     publishWebProjects: ${{ parameters.publishWeb }}
     arguments: '--no-restore --no-build --no-self-contained --nologo -o $(build.artifactStagingDirectory)/publish'
