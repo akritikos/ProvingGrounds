@@ -1,0 +1,7 @@
+- task: DotNetCoreCLI@2
+    displayName: Build Solution
+    inputs:
+      command: 'build'
+      configuration: $(BuildConfiguration)
+      arguments: '--no-restore --nologo -o $(build.artifactStagingDirectory)/build'
+      versioningScheme: byBuildNumber

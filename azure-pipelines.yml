@@ -19,6 +19,16 @@ trigger:
       - src/*
       - tests/*
 stages:
-  - stage: 'Versioning'
+  - stage: Version
     jobs:
-      - template: .config/general/gitversion.yml
+      - template: .config/ci/general/gitversion.yml
+  - stage: "Build Source Code"
+    pool:
+      vmImage: ubuntu-latest
+      job:
+      - checkout: self
+        fetchDepth: 1
+        steps:
+          - template: .config/ci/dotnet/nuget-cache.yml
+          - template: .config/ci/dotnet/restore.yml
+          - template: .config/ci/dotnet/build.yml
