@@ -22,7 +22,7 @@ stages:
   - stage: Version
     jobs:
       - template: .config/ci/general/gitversion.yml
-  - stage: "Build Source Code"
+  - stage: Build
     pool:
       vmImage: ubuntu-latest
       job:
