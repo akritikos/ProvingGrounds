@@ -9,6 +9,5 @@ steps:
 - task: Cache@2
   inputs:
     key: ${{ parameters.key }}
-    path: ${{ parameters.key }}
+    path: ${{ parameters.path }}
   displayName: Cache artifacts
-

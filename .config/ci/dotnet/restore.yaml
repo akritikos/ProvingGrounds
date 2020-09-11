@@ -1,3 +1,8 @@
+parameters:
+- name: locked
+  default: true
+  type: boolean
+
 steps:
 - task: DotNetCoreCLI@2
   inputs:
