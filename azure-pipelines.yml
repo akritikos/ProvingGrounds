@@ -18,6 +18,8 @@ trigger:
       - azure-pipelines.yml
       - src/*
       - tests/*
+variables:
+  group: DotNet
 pool:
       vmImage: ubuntu-latest
 stages:
