@@ -1,7 +1,11 @@
 jobs:
 - job: Version
   steps:
-    - pwsh: dotnet tool install --tool-path .. gitversion.tool
+    - template: ../general/dotnet-tool.yml
+      parameters:
+        toolName: gitversion.tool
       displayName: Install GitVersion
+      # - pwsh: dotnet tool install --tool-path .. gitversion.tool
+      #   displayName: Install GitVersion
     - pwsh: ../dotnet-gitversion /output buildserver /updateassemblyinfo
       displayName: Set SemVer from git history
