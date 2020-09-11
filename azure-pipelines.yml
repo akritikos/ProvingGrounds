@@ -24,7 +24,7 @@ variables:
   - name: SONAR_PROJECT
     value: akritikos_ProvingGrounds
 jobs:
-- template: .config/version/gitversion.yml
+- template: .config/ci/version/gitversion.yml
 # - job: Version
 #   pool:
 #     vmImage: ubuntu-latest
