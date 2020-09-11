@@ -1,7 +1,5 @@
 jobs:
 - job: Version
-  pool:
-    vmImage: ubuntu-latest
   steps:
     - pwsh: dotnet tool install --tool-path .. gitversion.tool
       displayName: Install GitVersion

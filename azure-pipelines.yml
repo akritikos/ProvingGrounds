@@ -18,17 +18,26 @@ trigger:
       - azure-pipelines.yml
       - src/*
       - tests/*
+pool:
+      vmImage: ubuntu-latest
 stages:
   - stage: Version
     jobs:
       - template: .config/ci/general/gitversion.yml
   - stage: Build
-    pool:
-      vmImage: ubuntu-latest
-      job:
-      - checkout: self
-        fetchDepth: 1
+    dependsOn: Version
+    jobs:
+      - job: Build
         steps:
+          - checkout: self
+            fetchDepth: 1
           - template: .config/ci/dotnet/nuget-cache.yml
           - template: .config/ci/dotnet/restore.yml
           - template: .config/ci/dotnet/build.yml
+  - stage: Test
+    dependsOn: Version
+    jobs:
+      - job: Test
+        steps:
+          - template: .config/ci/dotnet/nuget-cache.yml
+          - template: .config/ci/dotnet/restore.yml
