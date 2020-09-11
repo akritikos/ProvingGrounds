@@ -51,3 +51,7 @@ stages:
         steps:
           - template: .config/ci/dotnet/nuget-cache.yml
           - template: .config/ci/dotnet/restore.yml
+  - stage: PublishBleeding
+    dependsOn:
+    - Build
+    - Test
