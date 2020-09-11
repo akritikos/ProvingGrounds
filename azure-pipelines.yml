@@ -19,7 +19,11 @@ trigger:
       - src/*
       - tests/*
 variables:
-  group: DotNet
+  - group: DotNet
+  - group: Environment
+  - group: ApiKeys
+  - name: SONAR_PROJECT
+    value: akritikos_ProvingGrounds
 pool:
       vmImage: ubuntu-latest
 stages:
