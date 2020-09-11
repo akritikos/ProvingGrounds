@@ -21,20 +21,11 @@ trigger:
 variables:
   - group: Environment
   - group: ApiKeys
+  - group: DotNet Common
   - name: SONAR_PROJECT
     value: akritikos_ProvingGrounds
 jobs:
-- template: .config/ci/version/gitversion.yml
-# - job: Version
-#   pool:
-#     vmImage: ubuntu-latest
-#   steps:
-#     - pwsh: dotnet tool install --tool-path .. gitversion.tool
-#       displayName: Install GitVersion
-#     - pwsh: |
-#         ../dotnet-gitversion /output buildserver /updateassemblyinfo
-#       displayName: Sets SemVer
-#       name: versioning
+- template: .config/ci/general/gitversion.yml
 - job: Build
   pool:
     vmImage: ubuntu-latest
@@ -43,6 +34,7 @@ jobs:
   steps:
   - checkout: self
     fetchDepth: 1
+  - template: .config/ci/dotnet/nuget-cache.yml
   - task: DotNetCoreCLI@2
     inputs:
       command: 'restore'
