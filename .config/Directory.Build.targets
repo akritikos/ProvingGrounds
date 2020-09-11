@@ -1,3 +1,7 @@
 <Project>
 
+	<PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
+
 </Project>

@@ -1,8 +1,8 @@
 namespace Kritikos.JwtConfigTests
 {
-  using Kritikos.JwtConfig;
+	using Kritikos.JwtConfig;
 
-  using Xunit;
+	using Xunit;
 
 	public class SillyTests
 	{
@@ -12,6 +12,11 @@ namespace Kritikos.JwtConfigTests
 			var jwt = new JwtConfiguration();
 
 			Assert.NotNull(jwt.Audience);
+		}
+
+		public void InputFact(JwtConfiguration? trial)
+		{
+
 		}
 	}
 }
