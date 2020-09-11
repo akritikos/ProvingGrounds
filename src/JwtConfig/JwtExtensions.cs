@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Kritikos.JwtConfig
 {
+	using System;
+	using System.Text;
+
 	using Microsoft.AspNetCore.Authentication.JwtBearer;
+	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.IdentityModel.Tokens;
 
 	public static class JwtExtensions
