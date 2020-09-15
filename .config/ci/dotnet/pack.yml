@@ -1,13 +1,13 @@
 parameters:
-  - name: configuration
-    type: string
-    default: $(BuildConfiguration)
-  - name: projectsToPack
-    type: string
-    default: 'src/*/*.csproj'
-  - name: packDirectory
-    type: string
-    default: $(build.artifactStagingDirectory)/nuget
+- name: configuration
+  type: string
+  default: $(BuildConfiguration)
+- name: projectsToPack
+  type: string
+  default: 'src/*/*.csproj'
+- name: packDirectory
+  type: string
+  default: $(build.artifactStagingDirectory)/nuget
 
 steps:
   - task: DotNetCoreCLI@2
