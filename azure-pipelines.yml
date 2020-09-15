@@ -83,7 +83,7 @@ stages:
                   workingDirectory: $(build.artifactStagingDirectory)/pack
                   command: 'custom'
                   custom: 'nuget'
-                  arguments: >
+                  arguments: |
                     push *.nupkg
                     -s $(KritikosNuget)
                     -k $(KritikosApiKey)
