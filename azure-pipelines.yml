@@ -61,12 +61,12 @@ stages:
           - template: .config/ci/dotnet/test.yml
           - template: .config/ci/general/sonar-scanner-publish.yml
           - template: .config/ci/dotnet/coverage-upload.yml
-  - stage: PublishBleeding
+  - stage: PublishCI
     dependsOn:
     - Build
   - stage: PublishRelease
     condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     dependsOn:
-      - PublishBleeding
+      - PublishStable
       - Test
 
