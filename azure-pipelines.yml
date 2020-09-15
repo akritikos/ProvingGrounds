@@ -71,6 +71,7 @@ stages:
     condition: succeeded()
     jobs:
       - deployment: KritikosIO
+        displayName: Push nuget to Kritikos IO
         environment: kritikos-io
         strategy:
           runOnce:
