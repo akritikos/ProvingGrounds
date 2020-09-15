@@ -28,9 +28,11 @@ pool:
       vmImage: ubuntu-latest
 stages:
   - stage: Version
+    displayName: Calculates semantic version
     jobs:
       - template: .config/ci/general/gitversion.yml
   - stage: Build
+    displayName: Builds artifacts
     dependsOn: Version
     jobs:
       - job: Build
@@ -50,6 +52,7 @@ stages:
               artifactName: pack
               pathtoPublish: $(build.artifactStagingDirectory)/nuget
   - stage: Test
+    displayName: Runs unit tests and coverage collection
     dependsOn: Version
     jobs:
       - job: Test
@@ -62,11 +65,30 @@ stages:
           - template: .config/ci/general/sonar-scanner-publish.yml
           - template: .config/ci/dotnet/coverage-upload.yml
   - stage: PublishCI
+    displayName: Publishes nuget to nightly feed
     dependsOn:
     - Build
+    condition: succeded()
+    jobs:
+      - job:
+        steps:
+        - checkout: none
+        - download: current
+          artifact: nuget
+        - task: DotNetCoreCLI@2
+          displayName: Push Nugets
+          inputs:
+            workingDirectory: $(build.artifactStagingDirectory)/nuget
+            command: 'custom'
+            custom: 'nuget'
+            arguments: >
+              push *.nupkg
+              -s $(KritikosNuget)
+              -k $(KritikosApiKey)
   - stage: PublishRelease
+    displayName: Publishes public nuget release
     condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     dependsOn:
-      - PublishStable
+      - PublishCI
       - Test
 
