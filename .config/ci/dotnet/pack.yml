@@ -2,10 +2,10 @@ parameters:
   - name: configuration
     type: string
     default: $(BuildConfiguration)
-  -name: projectsToPack
+  - name: projectsToPack
     type: string
     default: 'src/*/*.csproj'
-  -name: packDirectory
+  - name: packDirectory
     type: string
     default: $(build.artifactStagingDirectory)/nuget
 
