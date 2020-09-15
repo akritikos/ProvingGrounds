@@ -77,16 +77,23 @@ stages:
           runOnce:
             deploy:
               steps:
-              - task: DotNetCoreCLI@2
-                displayName: Push Nugets
+              - task: NuGetCommand@2
+                displayName: 'Push NuGet Package'
                 inputs:
-                  workingDirectory: $(build.artifactStagingDirectory)/pack
-                  command: 'custom'
-                  custom: 'nuget'
-                  arguments: |
-                    push *.nupkg
-                    -s $(KritikosNuget)
-                    -k $(KritikosApiKey)
+                  command: 'push'
+                  packagesToPush: '$(Pipeline.Workspace)/pack/*.nupkg'
+                  nuGetFeedType: 'external'
+                  publishFeedCredentials: 'Kritikos'
+              # - task: DotNetCoreCLI@2
+              #   displayName: Push Nugets
+              #   inputs:
+              #     workingDirectory: $(build.artifactStagingDirectory)/pack
+              #     command: 'custom'
+              #     custom: 'nuget'
+              #     arguments: |
+              #       push *.nupkg
+              #       -s $(KritikosNuget)
+              #       -k $(KritikosApiKey)
   - stage: PublishRelease
     displayName: Publishes release nuget
     condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
