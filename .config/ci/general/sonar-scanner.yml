@@ -10,7 +10,7 @@ parameters:
   default: https://sonarcloud.io
 - name: sonarOrganization
   type: string
-  default: $(SONAR_ORG)
+  default: $(SonarCloudOrganization)
 - name: sonarProject
   type: string
   default: $(SONAR_PROJECT)
