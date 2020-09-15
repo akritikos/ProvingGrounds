@@ -68,7 +68,7 @@ stages:
     displayName: Publishes nuget to nightly feed
     dependsOn:
     - Build
-    condition: succeded()
+    condition: succeeded()
     jobs:
       - deployment:
         strategy:
