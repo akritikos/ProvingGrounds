@@ -71,6 +71,7 @@ stages:
     condition: succeeded()
     jobs:
       - deployment:
+        environment: kritikos-io
         strategy:
           runOnce:
             deploy:
