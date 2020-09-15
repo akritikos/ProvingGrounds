@@ -70,7 +70,7 @@ stages:
     - Build
     condition: succeeded()
     jobs:
-      - deployment: Deploy to nuget.kritikos.io
+      - deployment: KritikosIO
         environment: kritikos-io
         strategy:
           runOnce:
