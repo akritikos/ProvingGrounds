@@ -45,7 +45,7 @@ stages:
           - template: .config/ci/dotnet/publish.yml
           - template: .config/ci/general/publish.yml
             parameters:
-              artifactName: $(Build.Repository.Name)-$(Build.SourceVersion)
+              artifactName: $(Build.Repository.Name)-$(Build.BuildNumber)
           - template: .config/ci/dotnet/pack.yml
           - template: .config/ci/general/publish.yml
             parameters:

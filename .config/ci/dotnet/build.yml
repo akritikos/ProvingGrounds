@@ -10,4 +10,5 @@ steps:
     command: 'build'
     configuration: ${{ parameters.configuration }}
     arguments: '--no-restore --nologo'
-    versioningScheme: byBuildNumber
+    versioningScheme: byEnvVar
+    versionEnvVar: Build.BuildNumber
