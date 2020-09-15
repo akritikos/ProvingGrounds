@@ -80,7 +80,7 @@ stages:
               - task: DotNetCoreCLI@2
                 displayName: Push Nugets
                 inputs:
-                  workingDirectory: $(build.artifactStagingDirectory)/nuget
+                  workingDirectory: $(build.artifactStagingDirectory)/pack
                   command: 'custom'
                   custom: 'nuget'
                   arguments: >
