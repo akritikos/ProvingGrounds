@@ -1,0 +1,10 @@
+steps:
+  - template: ../general/dotnet-tool.yml
+    parameters:
+      toolName: dotnet-sonarscanner
+  - template: ../general/dotnet-tool.yml
+    parameters:
+      toolName: coveralls.net
+  - template: ../general/dotnet-tool.yml
+    parameters:
+      toolName: Codecov.Tool
