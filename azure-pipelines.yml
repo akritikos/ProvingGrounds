@@ -70,7 +70,7 @@ stages:
     - Build
     condition: succeeded()
     jobs:
-      - deployment:
+      - deployment: Deploy to nuget.kritikos.io
         environment: kritikos-io
         strategy:
           runOnce:
@@ -87,7 +87,7 @@ stages:
                     -s $(KritikosNuget)
                     -k $(KritikosApiKey)
   - stage: PublishRelease
-    displayName: Publishes public nuget release
+    displayName: Publishes release nuget
     condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     dependsOn:
       - PublishCI
