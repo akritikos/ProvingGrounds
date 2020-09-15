@@ -70,21 +70,21 @@ stages:
     - Build
     condition: succeded()
     jobs:
-      - job:
-        steps:
-        - checkout: none
-        - download: current
-          artifact: nuget
-        - task: DotNetCoreCLI@2
-          displayName: Push Nugets
-          inputs:
-            workingDirectory: $(build.artifactStagingDirectory)/nuget
-            command: 'custom'
-            custom: 'nuget'
-            arguments: >
-              push *.nupkg
-              -s $(KritikosNuget)
-              -k $(KritikosApiKey)
+      - deployment:
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - task: DotNetCoreCLI@2
+                displayName: Push Nugets
+                inputs:
+                  workingDirectory: $(build.artifactStagingDirectory)/nuget
+                  command: 'custom'
+                  custom: 'nuget'
+                  arguments: >
+                    push *.nupkg
+                    -s $(KritikosNuget)
+                    -k $(KritikosApiKey)
   - stage: PublishRelease
     displayName: Publishes public nuget release
     condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
