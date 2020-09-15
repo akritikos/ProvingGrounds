@@ -58,6 +58,9 @@ stages:
           - template: .config/ci/dotnet/restore.yml
           - template: .config/ci/dotnet/coverage-tools.yml
           - template: .config/ci/general/sonar-scanner.yml
+          - template: .config/ci/dotnet/test.yml
+          - template: .config/ci/general/sonar-scanner-publish.yml
+          - template: .config/ci/dotnet/coverage-upload.yml
   - stage: PublishBleeding
     dependsOn:
     - Build

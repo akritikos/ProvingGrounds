@@ -1,0 +1,23 @@
+parameters:
+- name: coverageTool
+  default: 'cobertura'
+  type: string
+- name: summaryFile
+  default: '$(build.artifactStagingDirectory)/coverage/coverage.cobertura.xml'
+  type: 'string'
+
+steps:
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: ${{ parameters.coverageTool }}
+    summaryFileLocation: ${{ parameters.summaryFile }}
+  displayName: Publish code coverage
+- ${{  if ne(variables['Build.Reason'], 'PullRequest') }}:
+  - pwsh: |
+      ../csmacnz.Coveralls --repoToken "$(CoverallsApiKey)" --opencover -i $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --useRelativePaths --commitId "$(Build.SourceVersion)" --commitBranch "$(Build.SourceBranchName)" --commitAuthor "$(Build.RequestedFor)" --commitEmail "$(Build.RequestedForEmail)" --commitMessage "$(Build.SourceVersionMessage)" --jobId "$(Build.BuildId)"
+      ../codecov --file $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --branch "$(Build.SourceBranchName)" --sha "$(Build.SourceVersion)"
+    displayName: Push Coverage (commit)
+- ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+  - pwsh: |
+      ../csmacnz.Coveralls --repoToken "$(CoverallsApiKey)" --opencover -i $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --useRelativePaths --commitId "$(Build.SourceVersion)" --commitBranch "$(Build.SourceBranchName)" --commitAuthor "$(Build.RequestedFor)" --commitEmail "$(Build.RequestedForEmail)" --commitMessage "$(Build.SourceVersionMessage)" --jobId "$(Build.BuildId)" --pullRequest "$(System.PullRequest.PullRequestId)"
+      ../codecov --file $(build.artifactStagingDirectory)/coverage/coverage.opencover.xml --branch "$(Build.SourceBranchName)" --sha "$(Build.SourceVersion)" --pr "$(System.PullRequest.PullRequestId)"
