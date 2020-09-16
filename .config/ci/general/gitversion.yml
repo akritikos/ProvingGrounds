@@ -1,8 +1,0 @@
-jobs:
-- job: Version
-  steps:
-    - template: ../general/dotnet-tool.yml
-      parameters:
-        toolName: gitversion.tool
-    - pwsh: ../dotnet-gitversion /output buildserver /updateassemblyinfo
-      displayName: Set SemVer from git history
