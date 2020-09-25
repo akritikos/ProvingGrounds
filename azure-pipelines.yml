@@ -1,0 +1,27 @@
+resources:
+  repositories:
+    - repository: self
+      checkoutOptions:
+        submodules: true
+        lfs: true
+    - repository: config
+      type: github
+      name: kritikos-io/.config
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - develop
+      - feature/*
+      - bugfix/*
+      - release/*
+  paths:
+    include:
+      - azure-pipelines.yml
+      - src/*
+      - tests/*
+pool:
+  vmImage: ubuntu-latest
+stages:
+  - template: ci/azure/stages/dotnet/build.yml@config
