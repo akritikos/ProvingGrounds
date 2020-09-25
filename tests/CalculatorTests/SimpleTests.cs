@@ -2,12 +2,10 @@ using System;
 
 using Xunit;
 
+using Kritikos.Calculator;
+
 namespace Kritikos.CalculatorTests
 {
-	using System.Drawing;
-
-	using Kritikos.Calculator;
-
 	public class SimpleTests
 	{
 		private static readonly Random Random = new Random();
