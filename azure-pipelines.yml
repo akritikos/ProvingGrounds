@@ -37,3 +37,4 @@ stages:
   - template: ci/azure/stages/dotnet/publish-nuget.yml@config
     parameters:
       stageName: Publishes nuget to Kritikos IO nightly feed
+      feedCredentials: Kritikos
