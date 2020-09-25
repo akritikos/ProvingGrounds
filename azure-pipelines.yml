@@ -7,6 +7,7 @@ resources:
     - repository: config
       type: github
       name: akritikos/.config
+      endpoint: akritikos
 trigger:
   batch: true
   branches:
