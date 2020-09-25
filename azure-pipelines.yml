@@ -24,6 +24,12 @@ trigger:
       - tests/*
 pool:
   vmImage: ubuntu-latest
+variables:
+  - group: DotNet
+  - group: Environment
+  - group: ApiKeys
+  - name: SONAR_PROJECT
+    value: akritikos_ProvingGrounds
 stages:
   - template: ci/azure/stages/general/gitversion.yml@config
   - template: ci/azure/stages/dotnet/build.yml@config
