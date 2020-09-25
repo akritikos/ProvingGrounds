@@ -6,7 +6,7 @@ resources:
         lfs: true
     - repository: config
       type: github
-      name: kritikos-io/.config
+      name: akritikos/.config
 trigger:
   batch: true
   branches:
