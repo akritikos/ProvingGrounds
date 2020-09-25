@@ -36,6 +36,15 @@ stages:
   - template: ci/azure/stages/dotnet/test.yml@config
   - template: ci/azure/stages/dotnet/publish-nuget.yml@config
     parameters:
+      type: CI
       stageName: Publishes nuget to Kritikos IO nightly feed
+      environment: kritikos-io
+      libraryArtifactName: $(Build.Repository.Name)-$(Build.BuildNumber)
+      feedCredentials: Kritikos
+  - template: ci/azure/stages/dotnet/publish-nuget.yml@config
+    parameters:
+      type: Release
+      stageName: Publishes nuget to Kritikos IO nightly feed
+      environment: nuget-org
       libraryArtifactName: $(Build.Repository.Name)-$(Build.BuildNumber)
       feedCredentials: Kritikos
