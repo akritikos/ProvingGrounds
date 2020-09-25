@@ -25,4 +25,5 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 stages:
+  - template: ci/azure/stages/general/gitversion.yml@config
   - template: ci/azure/stages/dotnet/build.yml@config
