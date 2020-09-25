@@ -45,7 +45,7 @@ stages:
     parameters:
       type: Publish_Release
       dependencies: Publish_CI
-      stageName: Publishes nuget to Kritikos IO nightly feed
+      stageName: Publishes nuget to nuget.org
       environment: nuget-org
       libraryArtifactName: $(Build.Repository.Name)-$(Build.BuildNumber)
       feedCredentials: Kritikos
