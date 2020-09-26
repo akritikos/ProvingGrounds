@@ -27,6 +27,7 @@
 		<LangVersion>latest</LangVersion>
 		<!-- Fully enable nullable context for all projects -->
 		<Nullable>enable</Nullable>
+		<IsTestProject Condition="$(MSBuildProjectName.ToLower.Contains('test')) OR $(MSBuildProjectFullPath.ToLower.Contains('test'))">true</IsTestProject>
 	</PropertyGroup>
 
 	<!-- Set automated build variable -->
@@ -82,7 +83,7 @@
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 	</PropertyGroup>
 
-	<ItemGroup Label="Nugets" Condition="'$(IsTest)' != true">
+	<ItemGroup Label="Nugets" Condition="'$(IsTestProject)' != 'true'">
 		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -115,7 +116,7 @@
 		<SourceLinkBitBucketHost Include="bitbucket.org" />
 	</ItemGroup>
 
-	<ItemGroup Label="TestCoverage" Condition="'$(IsTest)' == true">
+	<ItemGroup Label="TestCoverage" Condition="'$(IsTestProject)' == 'true'">
 		<PackageReference Include="coverlet.msbuild" Version="2.7.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
