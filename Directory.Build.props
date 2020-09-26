@@ -123,10 +123,7 @@
 	</ItemGroup>
 
 	<ItemGroup Label="License Import" Condition="Exists('$(MSBuildThisFileDirectory)\LICENSE.md')">
-		<None Include="..\..\LICENSE.md">
-			<Pack>True</Pack>
-			<PackagePath></PackagePath>
-		</None>
+		<None Include="$(MSBuildThisFileDirectory)\LICENSE.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<PropertyGroup Label="License" Condition="Exists('$(MSBuildThisFileDirectory)\LICENSE.md')">
