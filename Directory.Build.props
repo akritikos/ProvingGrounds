@@ -27,6 +27,7 @@
 		<LangVersion>latest</LangVersion>
 		<!-- Fully enable nullable context for all projects -->
 		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
 	<PropertyGroup Label="Code Analysis Ruleset" Condition="Exists('$(MSBuildThisFileDirectory)\.config\dotnet.ruleset')">
 		<CodeAnalysisRuleset>$(MSBuildThisFileDirectory)\.config\dotnet.ruleset</CodeAnalysisRuleset>
