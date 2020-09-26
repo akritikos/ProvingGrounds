@@ -101,7 +101,7 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup Label="SourceLink" Condition="$(IsPackable)">
+	<ItemGroup Label="SourceLink" Condition="'$(IsPackable)' == 'true'">
 		<PackageReference Include="Microsoft.SourceLink.Bitbucket.Git" Version="1.0.0-beta2-19367-01" PrivateAssets="All"/>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All"/>
 		<PackageReference Include="Microsoft.SourceLink.GitLab" Version="1.0.0-beta2-19367-01" PrivateAssets="All"/>
