@@ -4,8 +4,13 @@
 	</Target>
 
 	<PropertyGroup Label="Conditions">
-		<IsPackable>$(IsStandard)</IsPackable>
 		<IsTest>false</IsTest>
-		<IsTest Condition="$(MSBuildProjectName.ToLowerInvariant().EndsWith('tests'))">true</IsTest>
+		<IsTest Condition="$(MSBuildProjectFullPath.ToLowerInvariant.Contains('tests')) OR MSBuildProjectName.ToLowerInvariant().EndsWith('tests')">true</IsTest>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Package" Condition="$(IsTest)">
+		<Nullable>disable</Nullable>
+		<IsPackable>false</IsPackable>
+		<PackAsTool>false</PackAsTool>
 	</PropertyGroup>
 </Project>
