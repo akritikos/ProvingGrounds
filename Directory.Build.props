@@ -17,14 +17,14 @@
 		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 		<!-- Disable nugets from SDK fallback folders -->
 		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-		<!-- Enable nullable context by default on all projects -->
+		<!-- Enable nullable context by default -->
 		<Nullable>enable</Nullable>
 		<!-- Enable .NET 5+ native analyzers -->
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<!-- Use latest stable language features -->
 		<AnalysisLevel>latest</AnalysisLevel>
-		<!-- Use latest supported version supported by SDK -->
 		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<!-- Set automated build variable -->
@@ -68,19 +68,15 @@
 		<PackageId></PackageId>
 		<Company>Kritikos IO</Company>
 		<Authors>Alexandros Kritikos</Authors>
-		<!-- Optional: Declare that the Repository URL can be published to NuSpec -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
-		<!-- This is useful if you generate files during the build -->
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 	</PropertyGroup>
 
-	<ItemGroup Label="Nugets">
+	<ItemGroup Label="Nugets" Condition="!$(MSBuildProjectFullPath.Contains('tests'))">
 		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -103,7 +99,7 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup Label="SourceLink" Condition="$(IsPackable)">
+	<ItemGroup Label="SourceLink" Condition="'$(IsPackable)' == 'true'">
 		<PackageReference Include="Microsoft.SourceLink.Bitbucket.Git" Version="1.0.0" PrivateAssets="All"/>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
 		<PackageReference Include="Microsoft.SourceLink.GitLab" Version="1.0.0" PrivateAssets="All"/>
@@ -113,7 +109,7 @@
 		<SourceLinkBitBucketHost Include="bitbucket.org" />
 	</ItemGroup>
 
-	<ItemGroup Label="TestCoverage" Condition="$(IsTest)">
+	<ItemGroup Label="TestCoverage" Condition="$(MSBuildProjectFullPath.Contains('tests'))">
 		<PackageReference Include="coverlet.msbuild" Version="2.9.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
