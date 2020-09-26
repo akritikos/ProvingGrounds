@@ -115,7 +115,7 @@
 		<SourceLinkBitBucketHost Include="bitbucket.org" />
 	</ItemGroup>
 
-	<ItemGroup Label="TestCoverage" Condition="$(IsTest)">
+	<ItemGroup Label="TestCoverage" Condition="$(MSBuildProjectFullPath.Contains('tests')) OR '$(IsTestProject)' == 'true' OR '$(IsTest)' == true">
 		<PackageReference Include="coverlet.msbuild" Version="2.7.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
