@@ -41,10 +41,23 @@
 		<ContinuousIntegrationBuild Condition="'$(GITLAB_CI)' == 'true'">True</ContinuousIntegrationBuild>
 	</PropertyGroup>
 
+	<!-- Restore only locked nuget packages on automated builds -->
+	<PropertyGroup Label="CI" Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+		<RestoreLockedMode>true</RestoreLockedMode>
+	</PropertyGroup>
+
+	<!-- Enable custom nesting for files -->
+	<ItemGroup>
+		<ProjectCapability Include="DynamicFileNesting" />
+		<ProjectCapability Include="DynamicDependentFile" />
+	</ItemGroup>
+
+	<!-- Use submodule .NET ruleset for analyzers -->
 	<PropertyGroup Label="Code Analysis Ruleset" Condition="Exists('$(MSBuildThisFileDirectory)\.config\dotnet.ruleset')">
 		<CodeAnalysisRuleset>$(MSBuildThisFileDirectory)\.config\dotnet.ruleset</CodeAnalysisRuleset>
 	</PropertyGroup>
 
+	<!-- Use submodule stylecop configuration -->
 	<ItemGroup Label="Code Analysis Configuration" Condition="Exists('$(MSBuildThisFileDirectory)\.config\stylecop.json')">
 		<AdditionalFiles Include="$(MSBuildThisFileDirectory)\.config\stylecop.json" Link="stylecop.json" />
 	</ItemGroup>
@@ -57,9 +70,6 @@
 		<PackageId></PackageId>
 		<Company>Kritikos IO</Company>
 		<Authors>Alexandros Kritikos</Authors>
-		<!-- Optional: Include PDB in the built .nupkg to enable debugging -->
-		<!-- VS 2019 can fetch them through snupkg -->
-		<!--<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>-->
 		<!-- Optional: Declare that the Repository URL can be published to NuSpec -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<RepositoryType>git</RepositoryType>
