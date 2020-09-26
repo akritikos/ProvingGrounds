@@ -3,22 +3,13 @@
 		<Exec Command="npm install" />
 	</Target>
 
-	<Target Name="BeforeBuild">
-		<Message Importance="HIGH" Text="$(MSBuildProjectName) IsTest: $(IsTestProject) IsPackable: $(IsPackable)"/>
-	</Target>
-
 	<PropertyGroup Label="Conditions">
+		<IsPackable>$(IsStandard)</IsPackable>
 		<IsTest>false</IsTest>
-		<IsTest Condition="$(MSBuildProjectName.ToLowerInvariant().EndsWith('tests')) OR $(MSBuildProjectName.ToLower.Contains('test')) OR $(IsTestProject)">true</IsTest>
+		<IsTest Condition="$(MSBuildProjectName.ToLowerInvariant().EndsWith('tests'))">true</IsTest>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="$(IsTest)">
-		<Nullable>disable</Nullable>
-		<IsPackable>false</IsPackable>
-		<PackAsTool>false</PackAsTool>
-	</PropertyGroup>
-
-	<PropertyGroup Label="Package" Condition="$(IsTest)">
+	<PropertyGroup Label="Package" Condition="$(IsStandard)">
 		<PackageId>Kritikos.$(MSBuildProjectName)</PackageId>
 	</PropertyGroup>
 </Project>
