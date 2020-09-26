@@ -1,16 +1,32 @@
 <Project>
 	<PropertyGroup Label="Project">
+		<!-- Prepend organization name to default namespace -->
 		<RootNamespace>Kritikos.$(MSBuildProjectName)</RootNamespace>
-		<LangVersion>8.0</LangVersion>
+		<!-- Generate documentation file and ignore warnings for undocumented elements -->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>1591</NoWarn>
+		<!-- Error out upon trying to package projects marked as not packable -->
+		<WarnOnPackingNonPackableProject>true</WarnOnPackingNonPackableProject>
+		<!-- Disable warnings on preview SDK versions -->
 		<SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
 		<!-- We only target a single framework hence the subdir is not needed -->
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<!-- Same but for runtime assemblies -->
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<!-- Enable lock files -->
+		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+		<!-- Disable nugets from SDK fallback folders -->
+		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+		<!-- Enable nullable context by default -->
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
+		<!-- Enable .NET 5+ native analyzers -->
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<!-- Use latest stable language features -->
+		<AnalysisLevel>latest</AnalysisLevel>
+		<!-- Use latest released language version -->
+		<LangVersion>latest</LangVersion>
+		<!-- Fully enable nullable context for all projects -->
+		<Nullable>enable</Nullable>
 
 	<PropertyGroup Label="Code Analysis Ruleset" Condition="Exists('$(MSBuildThisFileDirectory)\.config\dotnet.ruleset')">
 		<CodeAnalysisRuleset>$(MSBuildThisFileDirectory)\.config\dotnet.ruleset</CodeAnalysisRuleset>
