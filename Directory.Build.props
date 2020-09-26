@@ -82,7 +82,7 @@
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 	</PropertyGroup>
 
-	<ItemGroup Label="Nugets" Condition="!$(MSBuildProjectFullPath.Contains('tests'))">
+	<ItemGroup Label="Nugets" Condition="'$(IsTest)' != true">
 		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -115,7 +115,7 @@
 		<SourceLinkBitBucketHost Include="bitbucket.org" />
 	</ItemGroup>
 
-	<ItemGroup Label="TestCoverage" Condition="$(MSBuildProjectFullPath.Contains('tests')) OR '$(IsTestProject)' == 'true' OR '$(IsTest)' == true">
+	<ItemGroup Label="TestCoverage" Condition="'$(IsTest)' == true">
 		<PackageReference Include="coverlet.msbuild" Version="2.7.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

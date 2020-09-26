@@ -3,12 +3,12 @@
 		<Exec Command="npm install" />
 	</Target>
 
-	<!-- <PropertyGroup Label="Conditions">
+	<PropertyGroup Label="Conditions">
 		<IsTest>false</IsTest>
-		<IsTest Condition="$(MSBuildProjectName.ToLowerInvariant().EndsWith('tests'))">true</IsTest>
-	</PropertyGroup> -->
+		<IsTest Condition="$(MSBuildProjectName.ToLowerInvariant().EndsWith('tests')) OR $(MSBuildProjectFullPath.Contains('tests')) OR '$(IsTestProject)' == 'true' OR '$(IsTest)' == true">true</IsTest>
+	</PropertyGroup>
 
-	<PropertyGroup Condition="$(MSBuildProjectFullPath.Contains('tests')) OR '$(IsTestProject)' == 'true' OR '$(IsTest)' == true">
+	<PropertyGroup Condition="'$(IsTest)' == true">
 		<Nullable>disable</Nullable>
 		<IsPackable>false</IsPackable>
 		<PackAsTool>false</PackAsTool>
