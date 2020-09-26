@@ -29,6 +29,18 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<!-- Set automated build variable -->
+	<PropertyGroup Label="CI Build">
+		<!-- https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#system-variables -->
+		<ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">True</ContinuousIntegrationBuild>
+
+		<!-- https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables -->
+		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
+
+		<!-- https://docs.gitlab.com/ee/ci/variables/predefined_variables.html -->
+		<ContinuousIntegrationBuild Condition="'$(GITLAB_CI)' == 'true'">True</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
 	<PropertyGroup Label="Code Analysis Ruleset" Condition="Exists('$(MSBuildThisFileDirectory)\.config\dotnet.ruleset')">
 		<CodeAnalysisRuleset>$(MSBuildThisFileDirectory)\.config\dotnet.ruleset</CodeAnalysisRuleset>
 	</PropertyGroup>
