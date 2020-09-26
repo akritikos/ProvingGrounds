@@ -8,8 +8,4 @@
 		<IsTest>false</IsTest>
 		<IsTest Condition="$(MSBuildProjectName.ToLowerInvariant().EndsWith('tests'))">true</IsTest>
 	</PropertyGroup>
-
-	<PropertyGroup Label="Package" Condition="$(IsPackable)">
-		<PackageId>Kritikos.$(MSBuildProjectName)</PackageId>
-	</PropertyGroup>
 </Project>
