@@ -39,11 +39,25 @@ jobs:
   - checkout: self
     fetchDepth: 1
   - task: DotNetCoreCLI@2
+    displayName: Restore nugets
+    inputs:
+      command: 'restore'
+      arguments: '--locked-mode --nologo'
+      verbosityRestore: Minimal
+  - task: DotNetCoreCLI@2
+    displayName: Build Solution
+    inputs:
+      command: 'build'
+      configuration: 'Debug'
+      arguments: '--no-restore --nologo'
+      versioningScheme: byEnvVar
+      versionEnvVar: Build.BuildNumber
+  - task: DotNetCoreCLI@2
     displayName: Test Solution
     inputs:
       command: 'test'
       configuration: 'Debug'
-      arguments: '--logger trx --verbosity normal --nologo /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage/ /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json'
+      arguments: '--logger trx --no-build --verbosity normal --nologo /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage/ /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json'
       publishTestResults: true
       verbosityPack: Minimal
       verbosityRestore: Minimal
