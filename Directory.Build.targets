@@ -3,6 +3,10 @@
 		<Exec Command="npm install" />
 	</Target>
 
+	<Target Name="BeforeBuild">
+		<Message Importance="HIGH" Text="$(MSBuildProjectName) IsTest: $(IsTestProject) IsPackable: $(IsPackable)"/>
+	</Target>
+
 	<PropertyGroup Condition="'$(IsTestProject)' == true">
 		<Nullable>disable</Nullable>
 		<IsPackable>false</IsPackable>

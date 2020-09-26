@@ -27,6 +27,7 @@
 		<LangVersion>latest</LangVersion>
 		<!-- Fully enable nullable context for all projects -->
 		<Nullable>enable</Nullable>
+		<IsTestProject>false</IsTestProject>
 		<IsTestProject Condition="$(MSBuildProjectName.ToLower.Contains('test')) OR $(MSBuildProjectFullPath.ToLower.Contains('test'))">true</IsTestProject>
 	</PropertyGroup>
 
@@ -83,7 +84,7 @@
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 	</PropertyGroup>
 
-	<ItemGroup Label="Nugets" Condition="'$(IsTestProject)' != 'true'">
+	<ItemGroup Label="Nugets" Condition="!$(IsTestProject)">
 		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -106,7 +107,7 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup Label="SourceLink" Condition="'$(IsPackable)' == 'true'">
+	<ItemGroup Label="SourceLink" Condition="$(IsPackable)">
 		<PackageReference Include="Microsoft.SourceLink.Bitbucket.Git" Version="1.0.0-beta2-19367-01" PrivateAssets="All"/>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All"/>
 		<PackageReference Include="Microsoft.SourceLink.GitLab" Version="1.0.0-beta2-19367-01" PrivateAssets="All"/>
@@ -116,7 +117,7 @@
 		<SourceLinkBitBucketHost Include="bitbucket.org" />
 	</ItemGroup>
 
-	<ItemGroup Label="TestCoverage" Condition="'$(IsTestProject)' == 'true'">
+	<ItemGroup Label="TestCoverage" Condition="$(IsTestProject)">
 		<PackageReference Include="coverlet.msbuild" Version="2.7.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
