@@ -3,6 +3,10 @@
 		<Exec Command="npm install" />
 	</Target>
 
+	<Target Name="BeforeBuild">
+		<Message Importance="HIGH" Text="$(MSBuildProjectName) packaged as $(PackageId) [isStandard: $(IsStandard)] [isPackable: $(IsPackable)]" />
+	</Target>
+
 	<PropertyGroup Label="Conditions">
 		<IsStandard>$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^netstandard\d'))</IsStandard>
 		<IsPackable>$(IsStandard)</IsPackable>

@@ -58,7 +58,7 @@ jobs:
       command: 'test'
       configuration: 'Debug'
       arguments: |
-        --no-restore --no-build --no-logo --verbosity normal /p:CollectCoverage=true
+        --no-restore --no-build --nologo --verbosity normal /p:CollectCoverage=true
         /p:CopyLocalLockFileAssemblies=true /p:IncludeTestAssembly=true /p:ExcludeByFile=\"**/Microsoft.NET.Test.Sdk.Program.cs\"
         /p:CoverletOutputFormat="opencover%2ccobertura" /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage/
         /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json'
