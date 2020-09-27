@@ -65,7 +65,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<PackageId></PackageId>
+		<PackageId>$(RootNamespace)</PackageId>
 		<Company>Kritikos IO</Company>
 		<Authors>Alexandros Kritikos</Authors>
 		<!-- Optional: Include PDB in the built .nupkg to enable debugging -->
