@@ -14,6 +14,11 @@
 		<PackageId>Kritikos.$(MSBuildProjectName)</PackageId>
 	</PropertyGroup>
 
+	<PropertyGroup Label="SDK Functionality" Condition="'$(UsingMicrosoftNETSdkWeb)' == 'True' OR '$(UsingMicrosoftNETSdkWorker)' == 'True'">
+		<IsPackable>false</IsPackable>
+		<PackAsTool>false</PackAsTool>
+	</PropertyGroup>
+
 	<PropertyGroup Label="Test Functionality" Condition="$(IsTest)">
 		<Nullable>disable</Nullable>
 		<IsPackable>false</IsPackable>
