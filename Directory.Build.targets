@@ -13,4 +13,8 @@
 	<PropertyGroup Label="Package" Condition="$(IsStandard)">
 		<PackageId>Kritikos.$(MSBuildProjectName)</PackageId>
 	</PropertyGroup>
+
+	<PropertyGroup Label="Test Functionality" Condition="$(IsTest)">
+
+	</PropertyGroup>
 </Project>
