@@ -70,10 +70,6 @@
 		<PackageId>$(RootNamespace)</PackageId>
 		<Company>Kritikos IO</Company>
 		<Authors>Alexandros Kritikos</Authors>
-		<!-- Optional: Include PDB in the built .nupkg to enable debugging -->
-		<!-- VS 2019 can fetch them through snupkg -->
-		<!--<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>-->
-		<!-- Optional: Declare that the Repository URL can be published to NuSpec -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
