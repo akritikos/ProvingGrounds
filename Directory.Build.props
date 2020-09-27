@@ -42,9 +42,9 @@
 	</PropertyGroup>
 
 	<!-- Restore only locked nuget packages on automated builds -->
-	<!-- <PropertyGroup Label="CI" Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+	<PropertyGroup Label="CI" Condition="'$(ContinuousIntegrationBuild)' == 'true'">
 		<RestoreLockedMode>true</RestoreLockedMode>
-	</PropertyGroup> -->
+	</PropertyGroup>
 
 	<!-- Enable custom nesting for files -->
 	<ItemGroup>
@@ -85,7 +85,7 @@
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 	</PropertyGroup>
 
-	<ItemGroup Label="Nugets">
+	<ItemGroup Label="Nugets" Condition="!$(IsTest)">
 		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
