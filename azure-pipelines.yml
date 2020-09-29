@@ -4,10 +4,6 @@ resources:
       checkoutOptions:
         submodules: true
         lfs: true
-    - repository: config
-      type: github
-      name: akritikos/.config
-      endpoint: akritikos
 trigger:
   batch: true
   branches:
@@ -22,30 +18,30 @@ trigger:
       - azure-pipelines.yml
       - src/*
       - tests/*
-pool:
-  vmImage: ubuntu-latest
 variables:
-  - group: DotNet
   - group: Environment
   - group: ApiKeys
   - name: SONAR_PROJECT
-    value: akritikos_ProvingGrounds
-stages:
-  - template: ci/azure/stages/general/gitversion.yml@config
-  - template: ci/azure/stages/dotnet/build.yml@config
-  - template: ci/azure/stages/dotnet/test.yml@config
-  - template: ci/azure/stages/dotnet/publish-nuget.yml@config
-    parameters:
-      type: Publish_CI
-      stageName: Publishes nuget to Kritikos IO nightly feed
-      environment: kritikos-io
-      libraryArtifactName: $(Build.Repository.Name)-$(Build.BuildNumber)
-      feedCredentials: Kritikos
-  - template: ci/azure/stages/dotnet/publish-nuget.yml@config
-    parameters:
-      type: Publish_Release
-      dependencies: Publish_CI
-      stageName: Publishes nuget to nuget.org
-      environment: nuget-org
-      libraryArtifactName: $(Build.Repository.Name)-$(Build.BuildNumber)
-      feedCredentials: Kritikos
+    value: REPLACE_ME
+jobs:
+- job: Version
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: Restore nugets
+    inputs:
+      command: 'restore'
+      restoreArguments: '--locked-mode --nologo'
+      verbosityRestore: Quiet
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'build'
+      arguments: '--no-restore --nologo'
+      versioningScheme: byEnvVar
+      versionEnvVar: Build.BuildNumber
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'test'
+      arguments: '--logger trx'
+      testRunTitle: 'Discover & Run Tests'
