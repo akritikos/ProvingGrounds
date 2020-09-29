@@ -12,7 +12,7 @@
 		<!-- <IsPackable>$(IsStandard)</IsPackable> -->
 		<IsTest>false</IsTest>
 		<IsTest Condition="'$(IsTestProject)' == 'true' OR $(MSBuildProjectName.ToLowerInvariant().EndsWith('tests')) OR $(MSBuildProjectFullPath.ToLowerInvariant().EndsWith('tests'))">true</IsTest>
-		<IsPackable>'!$(IsTest)'</IsPackable>
+		<IsPackable>!$(IsTest)</IsPackable>
 	</PropertyGroup>
 
 	<!-- <PropertyGroup Label="Package" Condition="$(IsStandard)">
