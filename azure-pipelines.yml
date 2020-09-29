@@ -58,7 +58,7 @@ jobs:
       command: 'test'
       configuration: 'Debug'
       # arguments: '--logger trx --no-restore --no-build --verbosity normal --nologo /p:CollectCoverage=true /p:CopyLocalLockFileAssemblies=true /p:IncludeTestAssembly=true /p:ExcludeByFile="**/Microsoft.NET.Test.Sdk.Program.cs" /p:CoverletOutputFormat="opencover%2ccobertura" /p:CoverletOutput=$(build.artifactStagingDirectory)/coverage /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json'
-      arguments: '--logger trx --no-restore --no-build --nologo --verbosity normal /p:CopyLocalLockFileAssemblies=true /p:IncludeTestAssembly=true /p:ExcludeByFile="**/Microsoft.NET.Test.Sdk.Program.cs" /p:CollectCoverage=true /p:CoverletOutputFormat="opencover%2ccobertura" /p:CoverletOutput="$(build.artifactStagingDirectory)/coverage/" /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json'
+      arguments: '--logger trx --no-restore --no-build --nologo --verbosity normal /p:CopyLocalLockFileAssemblies=true /p:IncludeTestAssembly=true /p:ExcludeByFile="**/Microsoft.NET.Test.Sdk.Program.cs" /p:CollectCoverage=true /p:CoverletOutput="$(build.artifactStagingDirectory)/coverage/" /p:MergeWith=$(build.artifactStagingDirectory)/coverage/coverage.json /p:CoverletOutputFormat="opencover%2ccobertura"'
       publishTestResults: true
       verbosityPack: Minimal
       verbosityRestore: Minimal
