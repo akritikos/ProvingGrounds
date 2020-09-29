@@ -31,11 +31,9 @@ variables:
   - name: SONAR_PROJECT
     value: akritikos_ProvingGrounds
 stages:
-  # - template: ci/azure/stages/general/gitversion.yml@config
-  # - template: ci/azure/stages/dotnet/build.yml@config
+  - template: ci/azure/stages/general/gitversion.yml@config
+  - template: ci/azure/stages/dotnet/build.yml@config
   - template: ci/azure/stages/dotnet/test.yml@config
-    parameters:
-      dependencies: ''
   # - template: ci/azure/stages/dotnet/publish-nuget.yml@config
   #   parameters:
   #     type: Publish_CI
