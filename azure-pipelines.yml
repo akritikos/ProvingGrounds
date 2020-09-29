@@ -35,13 +35,15 @@ jobs:
       restoreArguments: '--locked-mode'
       verbosityRestore: Quiet
   - task: DotNetCoreCLI@2
+    displayName: Build project
     inputs:
       command: 'build'
       arguments: '--no-restore'
       versioningScheme: byEnvVar
       versionEnvVar: Build.BuildNumber
   - task: DotNetCoreCLI@2
+    displayName: Run tests
     inputs:
       command: 'test'
-      arguments: '--logger trx'
+      arguments: '--logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
       testRunTitle: 'Discover & Run Tests'
